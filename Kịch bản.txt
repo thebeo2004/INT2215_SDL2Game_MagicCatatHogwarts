@@ -1,0 +1,22 @@
+- Cần có một kịch bản game hoàn chỉnh cho việc load các threat.
+
+	-> Ý tưởng: Tạo từng lớp, từng lớp một.
+
+2500 1 con -> first class
+
+3500 3 con
+
+5000 5 con
+
+7000 5 con
+
+10000 5 con
+
+15000 6 con
+
+20000 6 con
+
+25000 7 con
+
+35000 7 con
+
