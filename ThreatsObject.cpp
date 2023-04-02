@@ -11,6 +11,11 @@ ThreatsObject::ThreatsObject()
     is_free = true;
 
     is_dead = false;
+
+    max_x = 220 + rand() % 130;
+
+    max_y = 100 + rand() % 130;
+
 }
 
 Entity ThreatsObject::getReal_Position()
@@ -61,23 +66,23 @@ void ThreatsObject::Update_Pos()
     if (is_right)
     {
         x_pos_ -= x_val_;
-        x_pos_ = max(x_pos_, 324);
+        x_pos_ = max(x_pos_, max_x);
     }
     else
     {
         x_pos_ += x_val_;
-        x_pos_ = min(x_pos_, 279);
+        x_pos_ = min(x_pos_, max_x);
     }
 
     if (is_top)
     {
         y_pos_ += y_val_;
-        y_pos_ = min(y_pos_, 146);
+        y_pos_ = min(y_pos_, max_y);
     }
     else
     {
         y_pos_ -= y_val_;
-        y_pos_ = max(y_pos_, 203);
+        y_pos_ = max(y_pos_, max_y);
     }
 }
 

@@ -106,7 +106,6 @@ void close()
     SDL_Quit();
 }
 
-
 void Make_ThreatsList()
 {
     threats[0].resize(1);
@@ -204,7 +203,7 @@ int main(int argc, char * args[])
 
         if (imp_time_real < time_one_frame) SDL_Delay(time_one_frame - imp_time_real);
         
-        // cerr << "character" << " " << character.getPosX() << " " << character.getPosY() << "\n";
+        cerr << "character" << " " << character.getPosX() << " " << character.getPosY() << "\n";
         // cerr << "threat" << " " << threat.getPosX() << " " << threat.getPosY() << "\n";
     }
 

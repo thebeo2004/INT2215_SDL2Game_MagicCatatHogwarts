@@ -10,6 +10,8 @@ class ThreatsObject: public BaseObject
     private:
         int x_pos_, y_pos_;
 
+        int max_x, max_y;
+
         int x_val_, y_val_;
 
         SDL_Rect frame_clip_[10];
