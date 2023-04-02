@@ -22,6 +22,7 @@ vector<int> v = {2500, 5000, 7500, 9500, 12000, 16000, 21000, 25000, 30000};
 //The music that will be played
 Mix_Music *gMusic = NULL;
 
+
 bool init()
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -43,6 +44,11 @@ bool init()
     if (!(IMG_Init(imgFlags) && imgFlags))
         return false;
 
+    if (TTF_Init() == -1)
+    {
+        printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+		return false;
+    }
 
     if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
 	{
@@ -57,6 +63,7 @@ bool loadMedia()
 {
     bool success = true;
 
+    //load image
     if (!(character.loadFromFile("character/running.png") && gBackground.loadFromFile("background/background.png")))
     {
         cout << "Cannot load Img\n";
@@ -88,6 +95,14 @@ bool loadMedia()
 		success = false;
 	}
 
+    //Load font
+    gFont_threat = TTF_OpenFont("font/default.ttf", 22);
+    if (gFont_threat == NULL)
+    {
+        cout << "Failed to load lazy font! " << TTF_GetError() << "\n";
+        success = false;
+    }
+
     return success;
 }
 
@@ -97,13 +112,21 @@ void close()
     character.free();
     gBackground.free();
 
+    TTF_CloseFont(gFont_threat);
+    gFont_threat = NULL;
+
+    Mix_FreeMusic(gMusic);
+    gMusic = NULL;
+
     SDL_DestroyRenderer(gRenderer);
     SDL_DestroyWindow(gWindow);
     gWindow = NULL;
     gRenderer = NULL;
 
+    TTF_Quit();
     IMG_Quit();
     SDL_Quit();
+    Mix_Quit();
 }
 
 void Make_ThreatsList()
@@ -149,7 +172,6 @@ int main(int argc, char * args[])
 
     Mix_PlayMusic( gMusic, -1 );
     
-
     int batch = 0;
 
     while(true)
@@ -203,10 +225,9 @@ int main(int argc, char * args[])
 
         if (imp_time_real < time_one_frame) SDL_Delay(time_one_frame - imp_time_real);
         
-        cerr << "character" << " " << character.getPosX() << " " << character.getPosY() << "\n";
+        // cerr << "character" << " " << character.getPosX() << " " << character.getPosY() << "\n";
         // cerr << "threat" << " " << threat.getPosX() << " " << threat.getPosY() << "\n";
     }
-
 
     close();
 }

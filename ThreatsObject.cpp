@@ -1,12 +1,13 @@
 #pragma once
 
 #include "ThreatsObject.h"
+#include <iostream>
 
 ThreatsObject::ThreatsObject()
 {
     frame = 0;
     
-    life_point = 1;
+    life_point = 1 + rand() % 2;
 
     is_free = true;
 
@@ -15,7 +16,6 @@ ThreatsObject::ThreatsObject()
     max_x = 220 + rand() % 130;
 
     max_y = 100 + rand() % 130;
-
 }
 
 Entity ThreatsObject::getReal_Position()
@@ -28,9 +28,9 @@ Entity ThreatsObject::getReal_Position()
 
 void ThreatsObject::setVal()
 {
-    x_val_ = 3 + SDL_GetTicks()/5000;
+    x_val_ = 3 + SDL_GetTicks()/6000;
 
-    y_val_ = 2 + SDL_GetTicks()/6000;
+    y_val_ = 2 + SDL_GetTicks()/7000;
 }
 
 void ThreatsObject::setPos(int PosX, int PosY)
@@ -57,6 +57,8 @@ void ThreatsObject::setPos(int PosX, int PosY)
         status_ = NORMAL_RIGHT;
     else
         status_ = NORMAL_LEFT;
+
+    gText.SetFont(gFont_threat);
 }
 
 ThreatsObject::~ThreatsObject() {BaseObject::free();}
@@ -138,16 +140,17 @@ void ThreatsObject::render()
     {
         if (frame < NUM_FRAME_THREAT[DIE])
             BaseObject::loadFromFile("threats/die.png");
-
         else
         {
             if (!is_dead)
             {
                 is_dead = true;
                 BaseObject::free();
+                gText.free();
                 x_pos_ = 0;
                 y_pos_ = 0;
             }
+            else return;
         }
     }
     else
@@ -169,7 +172,6 @@ void ThreatsObject::render()
                 status_ = NORMAL_RIGHT;
 
                 Update_Pos();
-
             }
         }
         else
@@ -198,6 +200,11 @@ void ThreatsObject::render()
     SDL_RenderCopy(gRenderer, mTexture, &frame_clip_[frame], &renderquad);
 
     frame++;
+
+    string txt;
+    txt += char(life_point + 48);
+    gText.loadFromRenderedText(txt, {44, 39, 37});
+    gText.render(x_pos_ + 65, y_pos_ - 10);
 }
 
 void ThreatsObject::HandleInputAction(SDL_Event events)

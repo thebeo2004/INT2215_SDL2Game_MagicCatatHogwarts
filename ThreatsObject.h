@@ -2,6 +2,8 @@
 
 #include "CommonFunc.h"
 #include "BaseObject.h"
+#include "LoadFont.h"
+#include "LoadFont.cpp"
 
 int NUM_FRAME_THREAT[] = {1, 1, 7, 7, 3, 3, 8};
 
@@ -33,6 +35,8 @@ class ThreatsObject: public BaseObject
             HURT_RIGHT, HURT_LEFT,
             DIE,
         };
+
+        Font gText;
 
     public:
         ThreatsObject();
