@@ -149,6 +149,7 @@ void ThreatsObject::render()
                 gText.free();
                 x_pos_ = 0;
                 y_pos_ = 0;
+                return;
             }
             else return;
         }
