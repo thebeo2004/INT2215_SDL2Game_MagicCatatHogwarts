@@ -204,7 +204,7 @@ void ThreatsObject::render()
     string txt;
     txt += char(life_point + 48);
     gText.loadFromRenderedText(txt, {44, 39, 37});
-    gText.render(x_pos_ + 65, y_pos_ - 10);
+    gText.render(x_pos_ + 66, y_pos_ + 10);
 }
 
 void ThreatsObject::HandleInputAction(SDL_Event events)

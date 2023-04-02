@@ -22,7 +22,6 @@ vector<int> v = {2500, 5000, 7500, 9500, 12000, 16000, 21000, 25000, 30000};
 //The music that will be played
 Mix_Music *gMusic = NULL;
 
-
 bool init()
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -129,7 +128,7 @@ void close()
     Mix_Quit();
 }
 
-void Make_ThreatsList()
+void Resize_ThreatsList()
 {
     threats[0].resize(1);
     threats[1].resize(1);
@@ -140,7 +139,10 @@ void Make_ThreatsList()
     threats[6].resize(6);
     threats[7].resize(7);
     threats[8].resize(8);
+}
 
+void Initialize_Threats()
+{
     for(int i = 0; i < 9; i++)
     {
         if (i == 0) threats[0][0].setPos(646, 276);
@@ -160,11 +162,14 @@ void Make_ThreatsList()
 int main(int argc, char * args[])
 {
     srand(time(0));
-    Make_ThreatsList();
+
+    Resize_ThreatsList();
 
     if (!init()) return -1;
     if (!loadMedia()) return -1;
 
+    Initialize_Threats();
+    
     SDL_Event e;
 
     ImpTimer timer;

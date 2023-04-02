@@ -20,7 +20,7 @@ bool Font::loadFromRenderedText(string textureText, SDL_Color textColor)
 {
     free();
 
-    SDL_Surface* textSurface = TTF_RenderText_Solid(gFont_threat, textureText.c_str(), textColor);
+    SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, textureText.c_str(), textColor);
 
     if (textSurface == NULL)
         cout << "Unable to render text surface! " << TTF_GetError() << "\n";
