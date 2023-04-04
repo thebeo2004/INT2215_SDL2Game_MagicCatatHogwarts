@@ -147,6 +147,8 @@ void ThreatsObject::loadFont()
 
 void ThreatsObject::Lightning()
 {
+    if (status_ == DIE) return;
+    
     lightning_attack.Attack();
 
     life_point -= 1;
@@ -255,7 +257,6 @@ void ThreatsObject::render()
     frame++;
 
     loadFont();
-    
 }
 
 void ThreatsObject::HandleInputAction(SDL_Event events)

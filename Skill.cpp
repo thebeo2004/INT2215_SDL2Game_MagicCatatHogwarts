@@ -29,12 +29,13 @@ void Skill::render(int x, int y)
     if (is_attack && frame < 3)
     {
         BaseObject::loadFromFile("skill/lightning_attack.png");
-        SDL_Rect renderquad = {x - 10, 0, FRAME_LIGHTNING_WIDTH/2, y + 10};
+        SDL_Rect renderquad = {x - 20, 0, FRAME_LIGHTNING_WIDTH/2, y + 30};
         SDL_RenderCopy(gRenderer, mTexture, &frame_clip_[frame], &renderquad);
         frame++;
     }
     else
     {
+        BaseObject::free();
         is_attack = false;
         frame = 0;
     }

@@ -218,10 +218,8 @@ int main(int argc, char * args[])
                 }
 
                 if (character.check_lightning())
-                {
                     threats[i][j].Lightning();
-                }
-
+                
                 threats[i][j].render();
             }
         }

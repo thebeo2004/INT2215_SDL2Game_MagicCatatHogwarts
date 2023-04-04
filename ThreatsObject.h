@@ -30,6 +30,8 @@ class ThreatsObject: public BaseObject
 
         bool is_right, is_top;
 
+        bool is_dead;
+
         enum Animation
         {
             NORMAL_RIGHT, NORMAL_LEFT,
@@ -66,8 +68,6 @@ class ThreatsObject: public BaseObject
         void attack();
         //Calculate real position of Entity
         Entity getReal_Position();
-
-        bool is_dead;
 
         void loadFont();
         void loadLightning();
