@@ -3,7 +3,7 @@
 #include "CommonFunc.h"
 #include "BaseObject.h"
 
-int NUM_FRAME_CHARACTER[] = {6, 3, 11, 6, 5, 5, 5, 4, 16, 18};
+int NUM_FRAME_CHARACTER[] = {6, 6, 11, 6, 5, 8, 5, 4, 16, 18};
 
 class MainObject : public BaseObject
 {
