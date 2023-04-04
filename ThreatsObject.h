@@ -4,6 +4,8 @@
 #include "BaseObject.h"
 #include "LoadFont.h"
 #include "LoadFont.cpp"
+#include "Skill.h"
+#include "Skill.cpp"
 
 int NUM_FRAME_THREAT[] = {1, 1, 7, 7, 3, 3, 8};
 
@@ -37,6 +39,7 @@ class ThreatsObject: public BaseObject
         };
 
         Font gText;
+        Skill lightning_attack;
 
     public:
         ThreatsObject();
@@ -65,4 +68,9 @@ class ThreatsObject: public BaseObject
         Entity getReal_Position();
 
         bool is_dead;
+
+        void loadFont();
+        void loadLightning();
+
+        void Lightning();
 };

@@ -217,10 +217,14 @@ int main(int argc, char * args[])
                     threats[i][j].attack();
                 }
 
+                if (character.check_lightning())
+                {
+                    threats[i][j].Lightning();
+                }
+
                 threats[i][j].render();
             }
         }
-
 
         character.render();
 
@@ -230,8 +234,6 @@ int main(int argc, char * args[])
 
         if (imp_time_real < time_one_frame) SDL_Delay(time_one_frame - imp_time_real);
         
-        // cerr << "character" << " " << character.getPosX() << " " << character.getPosY() << "\n";
-        // cerr << "threat" << " " << threat.getPosX() << " " << threat.getPosY() << "\n";
     }
 
     close();

@@ -16,6 +16,7 @@ ThreatsObject::ThreatsObject()
     max_x = 220 + rand() % 130;
 
     max_y = 100 + rand() % 130;
+
 }
 
 Entity ThreatsObject::getReal_Position()
@@ -97,16 +98,16 @@ void ThreatsObject::attack()
     if (is_right)
     {
         status_ = ATTACK_RIGHT;
-        x_pos_ += 50;
+        x_pos_ += 10;
     }
     else
     {
         status_ = ATTACK_LEFT;
-        x_pos_ -= 50;
+        x_pos_ -= 10;
     }
 
-    if (is_top) y_pos_ -= 30;
-    else y_pos_ += 30;
+    if (is_top) y_pos_ -= 10;
+    else y_pos_ += 10;
 
     frame = 0;
 }
@@ -134,18 +135,56 @@ bool ThreatsObject::isInside(int x, int y)
     return false;
 }
 
+void ThreatsObject::loadFont()
+{
+    life_point = max(life_point, 0);
+
+    string txt;
+    txt += char(life_point + 48);
+    gText.loadFromRenderedText(txt, {44, 39, 37});
+    gText.render(x_pos_ + 66, y_pos_ + 10);
+}
+
+void ThreatsObject::Lightning()
+{
+    lightning_attack.Attack();
+
+    life_point -= 1;
+
+    if (life_point <= 0) status_ = DIE;
+
+    else
+    {
+        if (is_right)
+            status_ = HURT_RIGHT;
+        else
+            status_ = HURT_LEFT;
+    }
+
+    frame = 0;
+}
+
+void ThreatsObject::loadLightning()
+{
+    Entity pos = getReal_Position();
+    lightning_attack.render((pos.x_left + pos.x_right)/2, pos.y_top);
+}
+
 void ThreatsObject::render()
 {
+    
     if (status_ == DIE)
     {
         if (frame < NUM_FRAME_THREAT[DIE])
-            BaseObject::loadFromFile("threats/die.png");
+            BaseObject::loadFromFile("threats/die.png"),
+            loadLightning();
         else
         {
             if (!is_dead)
             {
                 is_dead = true;
                 BaseObject::free();
+                lightning_attack.free();
                 gText.free();
                 x_pos_ = 0;
                 y_pos_ = 0;
@@ -158,9 +197,14 @@ void ThreatsObject::render()
     {
         if (is_right)
         {
-            if (status_ == ATTACK_RIGHT && frame < NUM_FRAME_THREAT[status_])
-                BaseObject::loadFromFile("threats/attack_right.png");
-
+            if (status_ == ATTACK_RIGHT)
+            {
+                if (frame < NUM_FRAME_THREAT[status_])
+                    BaseObject::loadFromFile("threats/attack_right.png");
+                else
+                    status_ = DIE,
+                    frame = NUM_FRAME_THREAT[DIE];
+            }
             else if (status_ == HURT_RIGHT && frame < NUM_FRAME_THREAT[status_])
                 BaseObject::loadFromFile("threats/hurt_right.png");
 
@@ -177,8 +221,14 @@ void ThreatsObject::render()
         }
         else
         {
-            if (status_ == ATTACK_LEFT  && frame < NUM_FRAME_THREAT[status_])
-                BaseObject::loadFromFile("threats/attack_left.png");
+            if (status_ == ATTACK_LEFT)
+            {
+                if (frame < NUM_FRAME_THREAT[status_])
+                    BaseObject::loadFromFile("threats/attack_left.png");
+                else
+                    status_ = DIE,
+                    frame = NUM_FRAME_THREAT[DIE];
+            }
 
             else if (status_ == HURT_LEFT && frame < NUM_FRAME_THREAT[status_])
                 BaseObject::loadFromFile("threats/hurt_left.png");
@@ -194,6 +244,8 @@ void ThreatsObject::render()
                 Update_Pos();
             }
         }
+        
+        loadLightning();
     }
 
     SDL_Rect renderquad = {x_pos_, y_pos_, FRAME_THREAT_WIDTH, FRAME_THREAT_HEIGHT};
@@ -202,10 +254,8 @@ void ThreatsObject::render()
 
     frame++;
 
-    string txt;
-    txt += char(life_point + 48);
-    gText.loadFromRenderedText(txt, {44, 39, 37});
-    gText.render(x_pos_ + 66, y_pos_ + 10);
+    loadFont();
+    
 }
 
 void ThreatsObject::HandleInputAction(SDL_Event events)

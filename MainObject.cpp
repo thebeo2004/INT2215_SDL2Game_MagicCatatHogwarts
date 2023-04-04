@@ -13,6 +13,10 @@ MainObject::MainObject()
     life_point = 5;
 
     is_scared = true;
+
+    lightning_time = 0;
+    sunken_time = 0;
+    is_lightning = false;
 }
 
 MainObject::~MainObject()
@@ -56,9 +60,9 @@ void MainObject::set_clips()
     }
 }
 
-
 void MainObject::render()
 {
+        is_lightning = false;
 
     if (x_pos_ < 270)
     {
@@ -91,6 +95,13 @@ void MainObject::render()
             loadFromFile("character/hurt.png");
         else if (status_ == DRAWING && frame < NUM_FRAME_CHARACTER[status_]) 
             loadFromFile("character/drawing.png");
+        else if (status_ == LIGHTNING && frame < NUM_FRAME_CHARACTER[status_])
+            loadFromFile("character/lightning.png");
+        else if (lightning_time > 0)
+        {
+            frame = frame % NUM_FRAME_CHARACTER[DRAWING];
+            loadFromFile("character/drawing.png");
+        }
         else
         {
             status_ = WAITING;
@@ -112,6 +123,39 @@ void MainObject::HandelInputAction(SDL_Event e)
 {
     if (status_ == DIE) return;
 
+    if (e.type == SDL_KEYDOWN)
+    {
+        if (e.key.keysym.sym == SDLK_RCTRL || e.key.keysym.sym == SDLK_LCTRL)
+        {
+            if (lightning_time == 0)
+            {
+                lightning_time = SDL_GetTicks();
+                status_ = DRAWING;
+                frame = 0;
+            }
+            else if (lightning_time > 0)
+            {
+                if (SDL_GetTicks() - lightning_time >= 1200)
+                {
+                    status_ = LIGHTNING;
+                    frame = 0;
+                    is_lightning = true;
+                    lightning_time = -1;
+                }
+                else
+                {
+                    status_ = DRAWING;
+                    frame = 0;
+                }
+            }
+        }
+    }
+    else if (e.type == SDL_KEYUP)
+    {
+        if (e.key.keysym.sym == SDLK_RCTRL || e.key.keysym.sym == SDLK_LCTRL)
+            lightning_time = 0;
+    }
+
     if (e.type == SDL_MOUSEBUTTONDOWN)
     {
         if (is_free)
@@ -127,7 +171,10 @@ void MainObject::HandelInputAction(SDL_Event e)
     {
         is_free = true;
     }
+    
 }
+
+bool MainObject::check_lightning() {return is_lightning;}
 
 Entity MainObject::getReal_Position()
 {

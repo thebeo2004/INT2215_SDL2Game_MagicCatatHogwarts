@@ -3,7 +3,7 @@
 #include "CommonFunc.h"
 #include "BaseObject.h"
 
-int NUM_FRAME_CHARACTER[] = {6, 6, 11, 5, 5, 5, 4, 16, 18};
+int NUM_FRAME_CHARACTER[] = {6, 3, 11, 6, 5, 5, 5, 4, 16, 18};
 
 class MainObject : public BaseObject
 {
@@ -27,9 +27,15 @@ class MainObject : public BaseObject
         enum Animation
         {
             RUNNING, SCARED, WAITING,
-            DRAWING, HEART, LIGHTNING,
+            DRAWING, HEART, LIGHTNING, SUNKEN,
             HURT, DIE, VICTORY,
         };
+
+        //serve to unleash the ultimate skill
+        //lightning_time: Expecto Petronum
+        //sunken_time: Wingdadium Leviosa
+        int lightning_time, sunken_time;
+        bool is_lightning;
 
     public:
         MainObject();
@@ -43,4 +49,5 @@ class MainObject : public BaseObject
         //Calculate Real Position of Entity
         Entity getReal_Position();
         
+        bool check_lightning();
 };

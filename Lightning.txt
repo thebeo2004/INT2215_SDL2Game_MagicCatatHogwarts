@@ -1,0 +1,13 @@
+- Nhận trạng thái lightning: (Tuyệt chiêu các kiểu)
+	+) Nhấn giữ phím Shift 1.25s (OK)
+	+) Main sẽ nhận trạng thái lighting và load animation. (OK)
+	+) Về phần Threat, sẽ bị dính tuyệt chiêu, sẽ có sấm sét dính trên đỉnh đầu và chuyển sang trạng thái Hurt.
+
+Xử lý giai đoạn 3:
+	Khởi tạo một đối tượng Skill
+
+Bởi vì chỉ mỗi Skill là Lightning -> Tăng tính sinh động bằng cách thêm
+sấm tấn công trên mỗi threat. Còn những skill khác, chẳng hạn sunken, heart 
+thì không có animation bổ trợ cho Threat, và hoạt động vẫn diễn ra ở trên main.
+
+=> Đối tượng hướng đến của class Skill sẽ chỉ là load Lightning ở phía trên đỉnh đầu.
