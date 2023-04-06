@@ -10,6 +10,7 @@ MainObject::MainObject()
     status_ = WAITING;
     is_free = true;
     is_dead = false;
+    
     life_point = 5;
 
     is_scared = true;
