@@ -19,8 +19,8 @@ vector<vector<ThreatsObject>> threats(9);
 
 vector<int> v = {2500, 5000, 7500, 9500, 12000, 16000, 21000, 25000, 30000};
 
-//The music that will be played
-Mix_Music *gMusic = NULL;
+//BGM of game
+Mix_Music *BGM = NULL;
 
 bool init()
 {
@@ -87,8 +87,8 @@ bool loadMedia()
     }
 
     //Load music
-	gMusic = Mix_LoadMUS( "sound/BGM.ogg" );
-	if( gMusic == NULL )
+	BGM = Mix_LoadMUS( "sound/BGM.ogg" );
+	if( BGM == NULL )
 	{
 		printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
 		success = false;
@@ -114,8 +114,8 @@ void close()
     TTF_CloseFont(gFont_threat);
     gFont_threat = NULL;
 
-    Mix_FreeMusic(gMusic);
-    gMusic = NULL;
+    Mix_FreeMusic(BGM);
+    BGM = NULL;
 
     SDL_DestroyRenderer(gRenderer);
     SDL_DestroyWindow(gWindow);
@@ -175,7 +175,7 @@ int main(int argc, char * args[])
     ImpTimer timer;
     int time_one_frame = 1000/FRAME_PER_SECOND;
 
-    Mix_PlayMusic( gMusic, -1 );
+    Mix_PlayMusic(BGM, -1 );
     
     int batch = 0;
 
@@ -219,6 +219,9 @@ int main(int argc, char * args[])
 
                 if (character.check_lightning())
                     threats[i][j].Lightning();
+                
+                if (character.check_sunken())
+                    threats[i][j].Sunken();
                 
                 threats[i][j].render();
             }

@@ -14,9 +14,13 @@ class ThreatsObject: public BaseObject
     private:
         int x_pos_, y_pos_;
 
+        //the orgin position of threats -> serve to skill: Sunken
+        int x0, y0;
+
         int max_x, max_y;
 
         int x_val_, y_val_;
+
 
         SDL_Rect frame_clip_[10];
 
@@ -73,4 +77,5 @@ class ThreatsObject: public BaseObject
         void loadLightning();
 
         void Lightning();
+        void Sunken();
 };

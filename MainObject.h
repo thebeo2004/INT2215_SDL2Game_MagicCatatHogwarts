@@ -3,7 +3,7 @@
 #include "CommonFunc.h"
 #include "BaseObject.h"
 
-int NUM_FRAME_CHARACTER[] = {6, 6, 11, 6, 5, 8, 5, 4, 16, 18};
+int NUM_FRAME_CHARACTER[] = {6, 6, 11, 6, 5, 8, 8, 4, 16, 18};
 
 class MainObject : public BaseObject
 {
@@ -35,7 +35,7 @@ class MainObject : public BaseObject
         //lightning_time: Expecto Petronum
         //sunken_time: Wingdadium Leviosa
         int lightning_time, sunken_time;
-        bool is_lightning;
+        bool is_lightning, is_sunken;
 
     public:
         MainObject();
@@ -50,4 +50,5 @@ class MainObject : public BaseObject
         Entity getReal_Position();
         
         bool check_lightning();
+        bool check_sunken();
 };

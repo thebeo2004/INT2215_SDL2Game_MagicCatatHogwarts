@@ -37,8 +37,10 @@ void ThreatsObject::setVal()
 void ThreatsObject::setPos(int PosX, int PosY)
 {
     x_pos_ = PosX;
+    x0 = PosX;
 
     y_pos_ = PosY;
+    y0 = PosY;
 
     setVal();
 
@@ -170,6 +172,20 @@ void ThreatsObject::loadLightning()
 {
     Entity pos = getReal_Position();
     lightning_attack.render((pos.x_left + pos.x_right)/2, pos.y_top);
+}
+
+void ThreatsObject::Sunken()
+{
+    if (status_ == DIE) return;
+
+    x_pos_ = x0;
+
+    y_pos_ = y0;
+
+    if (is_right) status_ = NORMAL_RIGHT;
+    else status_ = NORMAL_LEFT;
+
+    frame = 0;
 }
 
 void ThreatsObject::render()

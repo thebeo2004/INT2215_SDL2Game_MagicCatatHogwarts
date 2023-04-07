@@ -1,0 +1,37 @@
+- Khai báo SDL_Mixer
+
+	-> SDL_Mixer cung cấp 2 loại công cụ:
+		+) Mix_Music: dành cho nhạc (dùng cho BGM).
+			->Giải phóng: Mix_FreeMusic(Mix_Music*)
+		+) Mix_Chunk: đoạn âm thanh ngắn (dùng cho hiệu ứng nhỏ)
+			->Giải phóng: Mix_FreeChunk(Mix_Chunk*)
+	-> Giải phóng: Mix_Quit();
+
+
+- Khởi tạo SDL_mixer, cần gọi đến Mix_OpenAudio
+	Mix_OpenAudio(int, Uint 16 format, int, int)
+	-> Lần lượt: Tần số (chuẩn là 44100),  MIX_DEFAULT_FORMAT, số lượng kênh (1 ~ mono, 2  ~ stereo,...), kích cỡ (Mặc định: 2048).
+
+		-> Nếu có lỗi: thông báo qua Mix_GetError().
+
+- Load audio:
+	+) Đối với Mix_Music: Mix_LoadMUS("name file audio")
+	+) Đối với Mix_Chunk: Mix_LoadWAV("name audio file")
+		-> Dĩ nhiên, nếu có lỗi: thông báo qua Mix_GetError().
+
+- Xử lý audio:
+
+	+) Chạy âm thanh hiệu ứng (ngắn, Mix_Chunk):
+		Mix_PlayChannel(int, Mix_Chunk*, int)
+			-> Lần lượt: -1, Chunk cần play, số lần repeat (vì chỉ là hiệu ứng -> set 0)
+
+	+) Chạy BGM: 
+		Mix_PlayMusic(Mix_Music*, int)
+			-> Lần lượt: BGM, số lần reply ~ vì ở đây dùng cho BGM -> reply vô hạn -> -1
+
+* Ý tưởng xử lý:
+
+- 1 BGM cho toàn game -> Chỉ cần set up Mix_Music các thứ -> Ok
+
+- Xử lý từng hiệu ứng âm thanh.
+
