@@ -195,7 +195,7 @@ void MainObject::HandelInputAction(SDL_Event e)
             }
             else if (sunken_time > 0)
             {
-                if (SDL_GetTicks() - sunken_time >= 1500)
+                if (SDL_GetTicks() - sunken_time >= 1300)
                 {
                     status_ = SUNKEN;
                     frame = 0;
