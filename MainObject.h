@@ -37,6 +37,12 @@ class MainObject : public BaseObject
         int lightning_time, sunken_time;
         bool is_lightning, is_sunken;
 
+        Mix_Chunk* mouse_effect;
+        Mix_Chunk* expectopetronum_effect;
+        Mix_Chunk* wingdardiumleviosa_effect;
+        Mix_Chunk* thunder_effect;
+        Mix_Chunk* wave_effect;
+
     public:
         MainObject();
         ~ MainObject();
@@ -51,4 +57,5 @@ class MainObject : public BaseObject
         
         bool check_lightning();
         bool check_sunken();
+
 };

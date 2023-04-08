@@ -107,7 +107,6 @@ bool loadMedia()
 
 void close()
 {
-    
     character.free();
     gBackground.free();
 

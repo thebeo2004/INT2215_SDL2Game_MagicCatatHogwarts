@@ -20,11 +20,27 @@ MainObject::MainObject()
 
     is_lightning = false;
     is_sunken = false;
+
 }
 
 MainObject::~MainObject()
 {
     BaseObject::free();
+
+    Mix_FreeChunk(mouse_effect);
+    mouse_effect = NULL;
+
+    Mix_FreeChunk(expectopetronum_effect);
+    expectopetronum_effect = NULL;
+
+    Mix_FreeChunk(wingdardiumleviosa_effect);
+    wingdardiumleviosa_effect = NULL;
+
+    Mix_FreeChunk(thunder_effect);
+    thunder_effect = NULL;
+
+    Mix_FreeChunk(wave_effect);
+    wave_effect = NULL;
 }
 
 int MainObject::getPosX()
@@ -51,6 +67,12 @@ void MainObject::hurt()
 
 void MainObject::set_clips()
 {
+    mouse_effect = Mix_LoadWAV("sound/mouse0.mp3");
+    expectopetronum_effect = Mix_LoadWAV("sound/expecto_patronum.mp3");
+    wingdardiumleviosa_effect = Mix_LoadWAV("sound/wingdardium_leviosa.mp3");
+    thunder_effect = Mix_LoadWAV("sound/thunder.ogg");
+    wave_effect = Mix_LoadWAV("sound/wave.ogg");
+
     if (mWidth > 0 && mHeight > 0)
     {
         for(int i = 0; i < 20; i++)
@@ -143,15 +165,17 @@ void MainObject::HandelInputAction(SDL_Event e)
                 lightning_time = SDL_GetTicks();
                 status_ = DRAWING;
                 frame = 0;
+                Mix_PlayChannel(-1, expectopetronum_effect, 0);
             }
             else if (lightning_time > 0)
             {
-                if (SDL_GetTicks() - lightning_time >= 1200)
+                if (SDL_GetTicks() - lightning_time >= 2000)
                 {
                     status_ = LIGHTNING;
                     frame = 0;
                     is_lightning = true;
                     lightning_time = -1;
+                    Mix_PlayChannel(-1, thunder_effect, 0);
                 }
                 else
                 {
@@ -167,15 +191,17 @@ void MainObject::HandelInputAction(SDL_Event e)
                 sunken_time = SDL_GetTicks();
                 status_ = DRAWING;
                 frame = 0;
+                Mix_PlayChannel(-1, wingdardiumleviosa_effect, 0);
             }
             else if (sunken_time > 0)
             {
-                if (SDL_GetTicks() - sunken_time >= 1200)
+                if (SDL_GetTicks() - sunken_time >= 1500)
                 {
                     status_ = SUNKEN;
                     frame = 0;
                     is_sunken = true;
                     sunken_time = -1;
+                    Mix_PlayChannel(-1, wave_effect, 0);
                 }
                 else
                 {
@@ -202,6 +228,8 @@ void MainObject::HandelInputAction(SDL_Event e)
             if (!is_scared) status_ = DRAWING;
 
             frame = 0;
+
+            Mix_PlayChannel(-1, mouse_effect, 0);
         }
     }
     else if (e.type == SDL_MOUSEBUTTONUP)

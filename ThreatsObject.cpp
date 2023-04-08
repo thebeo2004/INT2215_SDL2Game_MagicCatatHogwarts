@@ -17,6 +17,7 @@ ThreatsObject::ThreatsObject()
 
     max_y = 100 + rand() % 130;
 
+    is_soundeffect = true;
 }
 
 Entity ThreatsObject::getReal_Position()
@@ -116,6 +117,8 @@ void ThreatsObject::attack()
 
 void ThreatsObject::set_clips()
 {
+    sound_effect = Mix_LoadWAV("sound/threat_die.ogg");
+
     if (mWidth > 0 && mHeight > 0)
     {
         for(int i = 0; i < 10; i++)
@@ -190,22 +193,38 @@ void ThreatsObject::Sunken()
 
 void ThreatsObject::render()
 {
-    
     if (status_ == DIE)
     {
         if (frame < NUM_FRAME_THREAT[DIE])
-            BaseObject::loadFromFile("threats/die.png"),
+        { 
+              BaseObject::loadFromFile("threats/die.png");
+
             loadLightning();
+
+            if (is_soundeffect)
+                Mix_PlayChannel(-1, sound_effect, 0),
+                is_soundeffect = false;
+        }
         else
         {
             if (!is_dead)
             {
                 is_dead = true;
+
                 BaseObject::free();
+
                 lightning_attack.free();
+
                 gText.free();
+
+                Mix_FreeChunk(sound_effect);
+
+                sound_effect = NULL;
+
                 x_pos_ = 0;
+
                 y_pos_ = 0;
+
                 return;
             }
             else return;
