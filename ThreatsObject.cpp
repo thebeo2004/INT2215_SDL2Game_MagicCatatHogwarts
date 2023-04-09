@@ -22,10 +22,20 @@ ThreatsObject::ThreatsObject()
 
 Entity ThreatsObject::getReal_Position()
 {
-    Entity ans(x_pos_ + 45, x_pos_ + FRAME_THREAT_WIDTH - 46,
-                y_pos_ + 37, y_pos_ + FRAME_THREAT_HEIGHT - 38);
+    
+    if (is_right)
+    {  
+        Entity ans(x_pos_ + 45, x_pos_ + FRAME_THREAT_WIDTH - 46,
+                    y_pos_ + 37, y_pos_ + FRAME_THREAT_HEIGHT - 38);
+        return ans;
+    }
 
-    return ans;
+    else
+    {
+        Entity ans(x_pos_ + 46, x_pos_ + FRAME_THREAT_WIDTH - 45,
+                    y_pos_ + 37, y_pos_ + FRAME_THREAT_HEIGHT - 38);
+        return ans;
+    }
 }
 
 void ThreatsObject::setVal()
