@@ -39,8 +39,8 @@ MainObject::~MainObject()
     Mix_FreeChunk(thunder_effect);
     thunder_effect = NULL;
 
-    Mix_FreeChunk(wave_effect);
-    wave_effect = NULL;
+    Mix_FreeChunk(wind_effect);
+    wind_effect = NULL;
 }
 
 int MainObject::getPosX()
@@ -71,7 +71,7 @@ void MainObject::set_clips()
     expectopetronum_effect = Mix_LoadWAV("sound/expecto_patronum.mp3");
     wingdardiumleviosa_effect = Mix_LoadWAV("sound/wingdardium_leviosa.mp3");
     thunder_effect = Mix_LoadWAV("sound/thunder.ogg");
-    wave_effect = Mix_LoadWAV("sound/wave.ogg");
+    wind_effect = Mix_LoadWAV("sound/wind.ogg");
 
     if (mWidth > 0 && mHeight > 0)
     {
@@ -89,6 +89,8 @@ void MainObject::render()
 {
     is_lightning = false;
     is_sunken = false;
+
+    ultimate_skill.render();
 
     if (x_pos_ < 270)
     {
@@ -163,18 +165,27 @@ void MainObject::HandelInputAction(SDL_Event e)
             if (lightning_time == 0)
             {
                 lightning_time = SDL_GetTicks();
+
                 status_ = DRAWING;
+
                 frame = 0;
-                Mix_PlayChannel(-1, expectopetronum_effect, 0);
+
+                Mix_PlayChannel(3, expectopetronum_effect, 0);
+
+                ultimate_skill.expecto();
             }
             else if (lightning_time > 0)
             {
                 if (SDL_GetTicks() - lightning_time >= 2000)
                 {
                     status_ = LIGHTNING;
+
                     frame = 0;
+
                     is_lightning = true;
+
                     lightning_time = -1;
+
                     Mix_PlayChannel(-1, thunder_effect, 0);
                 }
                 else
@@ -189,19 +200,30 @@ void MainObject::HandelInputAction(SDL_Event e)
             if (sunken_time == 0)
             {
                 sunken_time = SDL_GetTicks();
+
                 status_ = DRAWING;
+
                 frame = 0;
-                Mix_PlayChannel(-1, wingdardiumleviosa_effect, 0);
+
+                Mix_PlayChannel(3, wingdardiumleviosa_effect, 0);
+
+                ultimate_skill.wingardium();
             }
             else if (sunken_time > 0)
             {
                 if (SDL_GetTicks() - sunken_time >= 1300)
                 {
                     status_ = SUNKEN;
+
                     frame = 0;
+
                     is_sunken = true;
+
                     sunken_time = -1;
-                    Mix_PlayChannel(-1, wave_effect, 0);
+
+                    Mix_PlayChannel(-1, wind_effect, 0);
+
+                    // ultimate_skill.transfer();
                 }
                 else
                 {
@@ -214,9 +236,21 @@ void MainObject::HandelInputAction(SDL_Event e)
     else if (e.type == SDL_KEYUP)
     {
         if (e.key.keysym.sym == SDLK_RCTRL || e.key.keysym.sym == SDLK_LCTRL)
+        {  
+            if (SDL_GetTicks() - lightning_time < 2000)
+                ultimate_skill.transfer(),
+                Mix_HaltChannel(3);
+
             lightning_time = 0;
+        }
         else if (e.key.keysym.sym == SDLK_RALT || e.key.keysym.sym == SDLK_LALT)
+        {
+            if (SDL_GetTicks() - sunken_time < 2000)
+                ultimate_skill.transfer(),
+                Mix_HaltChannel(3);
+
             sunken_time = 0;
+        }
     }
 
     if (e.type == SDL_MOUSEBUTTONDOWN)

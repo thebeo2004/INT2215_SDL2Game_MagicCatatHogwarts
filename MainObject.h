@@ -2,6 +2,8 @@
 
 #include "CommonFunc.h"
 #include "BaseObject.h"
+#include "Tittle.h"
+#include "Tittle.cpp"
 
 int NUM_FRAME_CHARACTER[] = {6, 6, 11, 6, 5, 8, 8, 4, 16, 18};
 
@@ -37,11 +39,13 @@ class MainObject : public BaseObject
         int lightning_time, sunken_time;
         bool is_lightning, is_sunken;
 
+        Tittle ultimate_skill;
+
         Mix_Chunk* mouse_effect;
         Mix_Chunk* expectopetronum_effect;
         Mix_Chunk* wingdardiumleviosa_effect;
         Mix_Chunk* thunder_effect;
-        Mix_Chunk* wave_effect;
+        Mix_Chunk* wind_effect;
 
     public:
         MainObject();

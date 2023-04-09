@@ -1,0 +1,14 @@
+Mục đích: Khi mà vừa bấn phím cho mục đích ultimate skill
+
+-> Đống thời lúc này, tittle skill sẽ đi ra dần dần.
+
+=> Trong trạng thái bấm phím -> nhận dạng phím bấm ứng với skill gì
+    => Cho tittle skill đi ra dần.
+
+Lập 1 class Tittle, kế thừa từ BaseObject, thêm 2 thuộc tính x, y để hiển thị tọa độ.
+    -> Sẽ hiển thị Image dần khi nhấn phím -> x biến thiên, còn y là const
+        -> x0 = -313, y0 = 50
+
+
+
+    
