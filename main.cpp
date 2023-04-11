@@ -174,7 +174,7 @@ int main(int argc, char * args[])
     ImpTimer timer;
     int time_one_frame = 1000/FRAME_PER_SECOND;
 
-    Mix_PlayMusic(BGM, -1 );
+    Mix_PlayMusic(BGM, -1);
     
     int batch = 0;
 
