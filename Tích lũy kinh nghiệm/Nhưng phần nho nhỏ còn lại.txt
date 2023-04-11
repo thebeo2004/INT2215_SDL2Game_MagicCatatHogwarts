@@ -1,0 +1,8 @@
+Các phần nhỏ cần làm:
+
+    - Hiện thị mạng của main -> Dùng hình trái tim hiển thị trên đầu Screen.
+    - Giới hạn số lần dùng Lightning -> Giới hạn còn 3, đồng thời, hiển thị số lần còn lại ở trên screen.
+    - Giới hạn cách 5s mới được dùng Wingardium -> Hiện thị trên màn hình xem có được dùng hay không.
+    - Hoàn thiện hệ thống tính Score sau khi kết thúc game.
+        +) Khi giết được 1 quái -> Điểm nhận vào bình phương khoảng cách từ quái đó -> main: (x1 - x2)^2 + (y1 - y2) ^2
+            Đồng thời điểm đó sẽ nhân hệ số với số quái giết được trong cùng 1 lúc.

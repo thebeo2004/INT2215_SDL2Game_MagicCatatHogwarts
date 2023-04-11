@@ -13,6 +13,8 @@ MainObject::MainObject()
     
     life_point = 5;
 
+    num = 3;
+
     is_scared = true;
 
     lightning_time = 0;
@@ -21,6 +23,10 @@ MainObject::MainObject()
     is_lightning = false;
     is_sunken = false;
 
+    heart_displayed.set_clip();
+    lightning_displayed.set_clip();
+
+    set_font = false;
 }
 
 MainObject::~MainObject()
@@ -92,6 +98,14 @@ void MainObject::render()
 
     ultimate_skill.render();
 
+    heart_displayed.render(life_point);
+
+    if (!set_font)
+        lightning_displayed.SetFont(),
+        set_font = true;
+
+    lightning_displayed.render(num);
+
     if (x_pos_ < 270)
     {
         loadFromFile("character/running.png");
@@ -160,7 +174,7 @@ void MainObject::HandelInputAction(SDL_Event e)
 
     if (e.type == SDL_KEYDOWN)
     {
-        if (e.key.keysym.sym == SDLK_RCTRL || e.key.keysym.sym == SDLK_LCTRL)
+        if ((e.key.keysym.sym == SDLK_RCTRL || e.key.keysym.sym == SDLK_LCTRL) && num > 0)
         {
             if (lightning_time == 0)
             {
@@ -235,13 +249,15 @@ void MainObject::HandelInputAction(SDL_Event e)
     }
     else if (e.type == SDL_KEYUP)
     {
-        if (e.key.keysym.sym == SDLK_RCTRL || e.key.keysym.sym == SDLK_LCTRL)
+        if ((e.key.keysym.sym == SDLK_RCTRL || e.key.keysym.sym == SDLK_LCTRL) && num > 0)
         {  
             if (SDL_GetTicks() - lightning_time < 2000)
                 ultimate_skill.transfer(),
                 Mix_HaltChannel(3);
 
             lightning_time = 0;
+
+            num--;
         }
         else if (e.key.keysym.sym == SDLK_RALT || e.key.keysym.sym == SDLK_LALT)
         {

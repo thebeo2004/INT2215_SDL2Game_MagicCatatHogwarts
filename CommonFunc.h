@@ -40,7 +40,7 @@ static SDL_Window* gWindow = NULL;
 static SDL_Renderer* gRenderer = NULL;
 
 //The font used to display point life of threats
-static TTF_Font *gFont_threat = NULL;
+static TTF_Font *gFont_22 = NULL;
 
 bool isCollision(Entity a, Entity b)
 {

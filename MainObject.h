@@ -4,6 +4,10 @@
 #include "BaseObject.h"
 #include "Tittle.h"
 #include "Tittle.cpp"
+#include "Heart_Displayed.h"
+#include "Heart_Displayed.cpp"
+#include "Lightning_Displayed.h"
+#include "Lightning_Displayed.cpp"
 
 int NUM_FRAME_CHARACTER[] = {6, 6, 11, 6, 5, 8, 8, 4, 16, 18};
 
@@ -26,6 +30,11 @@ class MainObject : public BaseObject
 
         bool is_dead, is_scared;
 
+        //Số lần sử dụng skill
+        int num;
+
+        bool set_font;
+
         enum Animation
         {
             RUNNING, SCARED, WAITING,
@@ -40,6 +49,9 @@ class MainObject : public BaseObject
         bool is_lightning, is_sunken;
 
         Tittle ultimate_skill;
+
+        Heart heart_displayed;
+        Lightning lightning_displayed;
 
         Mix_Chunk* mouse_effect;
         Mix_Chunk* expectopetronum_effect;

@@ -72,7 +72,7 @@ void ThreatsObject::setPos(int PosX, int PosY)
     else
         status_ = NORMAL_LEFT;
 
-    gText.SetFont(gFont_threat);
+    gText.SetFont(gFont_22);
 }
 
 ThreatsObject::~ThreatsObject() {BaseObject::free();}

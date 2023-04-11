@@ -95,8 +95,8 @@ bool loadMedia()
 	}
 
     //Load font
-    gFont_threat = TTF_OpenFont("font/default.ttf", 22);
-    if (gFont_threat == NULL)
+    gFont_22 = TTF_OpenFont("font/default.ttf", 22);
+    if (gFont_22 == NULL)
     {
         cout << "Failed to load lazy font! " << TTF_GetError() << "\n";
         success = false;
@@ -110,8 +110,8 @@ void close()
     character.free();
     gBackground.free();
 
-    TTF_CloseFont(gFont_threat);
-    gFont_threat = NULL;
+    TTF_CloseFont(gFont_22);
+    gFont_22 = NULL;
 
     Mix_FreeMusic(BGM);
     BGM = NULL;

@@ -1,0 +1,26 @@
+
+- Khai báo thư viện <SDL_ttf.h>
+
+    -> Cách thức hoạt động SDL_ttf: tạo ra 1 ảnh từ 1 font và màu cho trước. 
+
+- Khởi tạo SDL_ttf: TTF_Init()
+    -> check lỗi thông qua TTF_GetError()
+
+- Loại dữ liệu sử dụng:
+            TTF_Font* -> Sinh ra 1 texture (khá tương tự như image ~ thay cho loadFile)
+
+- Khởi tạo cho TTF_Font thông qua hàm TTF_OpenFont:
+    TTF_Font* = TTF_OpenFont(tên địa chỉ, kích thước muốn vẽ)
+        -> Ở đây, thì ta đã định dạng được loại font cần vẽ thông qua hàm đầu vào, và cỡ chữ mà ta muốn vẽ vào 1 biến có kiểu TTF_Font*
+            -> Tạo tiền đề để tạo texture (khá tương tự với image)
+
+- Hiển thị Font chữ.
+
+    +) Load Font: Khá tương tự với việc load ảnh.
+        Nếu load ảnh thông qua SDL_Surface bằng cách dùng hàm IMG_Load(địa chỉ vùng ảnh) 
+            -> Từ SDL_Surface, truyền qua kiểu dữ liệu Texture thông qua hàm: SDL_CreateTextureFromSurface(SDL_Renderer*, SDL_Surface*)
+                Kích thước ảnh truyền vào sẽ được lấy qua: Surface -> w và Surface -> hiệu
+        Còn ở load Font thì cũng thông qua SDL_Surface, nhưng mà bằng hàm: TTF_RenderText_Solid(TTF_Font*, chữ cần hiển thị, textcolor ~ màu sắc hiển thị) -> Tương tự như load ảnh, sau khi đã định hình được font chữ và màu sắc -> Truyền vào 1 ảnh (transparent)
+            -> Sau đó, cùng tạo texture from surface thông qua SDL_CreateTextureFromSurface(SDL_Renderer*, SDL_Texture*)
+                -> Sau đó, xử lý giống image, RenderCopy,...
+        
