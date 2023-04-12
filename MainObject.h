@@ -8,6 +8,8 @@
 #include "Heart_Displayed.cpp"
 #include "Lightning_Displayed.h"
 #include "Lightning_Displayed.cpp"
+#include "Wingar_Displayed.h"
+#include "Wingar_Displayed.cpp"
 
 int NUM_FRAME_CHARACTER[] = {6, 6, 11, 6, 5, 8, 8, 4, 16, 18};
 
@@ -30,7 +32,7 @@ class MainObject : public BaseObject
 
         bool is_dead, is_scared;
 
-        //Số lần sử dụng skill
+        //Số lần sử dụng skill expecto
         int num;
 
         bool set_font;
@@ -42,16 +44,22 @@ class MainObject : public BaseObject
             HURT, DIE, VICTORY,
         };
 
-        //serve to unleash the ultimate skill
+        //chỉ là biến tạm thời -> Xác định khoảng thời gian nhấn phím để tung ra skill
         //lightning_time: Expecto Petronum
         //sunken_time: Wingdadium Leviosa
         int lightning_time, sunken_time;
+
+        //Phục vụ việc xem đã đủ 5s chưa kể từ lần sử dụng Wingar gần nhất.
+        int wingar_time;
+        bool is_wingartime;
+
         bool is_lightning, is_sunken;
 
         Tittle ultimate_skill;
 
         Heart heart_displayed;
         Lightning lightning_displayed;
+        Wingar wingar_displayed;
 
         Mix_Chunk* mouse_effect;
         Mix_Chunk* expectopetronum_effect;
@@ -72,6 +80,10 @@ class MainObject : public BaseObject
         Entity getReal_Position();
         
         bool check_lightning();
+
         bool check_sunken();
+
+        //Update thời gian và check xem đã đủ 5s kể từ lần cuối dùng Wingar hay chưa?
+        void Update_WingarTime();
 
 };

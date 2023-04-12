@@ -25,8 +25,12 @@ MainObject::MainObject()
 
     heart_displayed.set_clip();
     lightning_displayed.set_clip();
+    wingar_displayed.set_clip();
 
     set_font = false;
+
+    wingar_time = 0;
+    is_wingartime = true;
 }
 
 MainObject::~MainObject()
@@ -105,6 +109,8 @@ void MainObject::render()
         set_font = true;
 
     lightning_displayed.render(num);
+
+    if (is_wingartime) wingar_displayed.render();
 
     if (x_pos_ < 270)
     {
@@ -209,7 +215,7 @@ void MainObject::HandelInputAction(SDL_Event e)
                 }
             }
         }
-        else if (e.key.keysym.sym == SDLK_RALT || e.key.keysym.sym == SDLK_LALT)
+        else if ((e.key.keysym.sym == SDLK_RALT || e.key.keysym.sym == SDLK_LALT) && is_wingartime)
         {
             if (sunken_time == 0)
             {
@@ -259,13 +265,14 @@ void MainObject::HandelInputAction(SDL_Event e)
 
             num--;
         }
-        else if (e.key.keysym.sym == SDLK_RALT || e.key.keysym.sym == SDLK_LALT)
+        else if ((e.key.keysym.sym == SDLK_RALT || e.key.keysym.sym == SDLK_LALT) && is_wingartime)
         {
             if (SDL_GetTicks() - sunken_time < 2000)
                 ultimate_skill.transfer(),
                 Mix_HaltChannel(3);
 
             sunken_time = 0;
+            wingar_time = SDL_GetTicks();
         }
     }
 
@@ -286,7 +293,8 @@ void MainObject::HandelInputAction(SDL_Event e)
     {
         is_free = true;
     }
-    
+
+    Update_WingarTime();
 }
 
 bool MainObject::check_lightning() {return is_lightning;}
@@ -299,3 +307,12 @@ Entity MainObject::getReal_Position()
 
     return ans;
 }
+
+void MainObject::Update_WingarTime()
+{
+    if (wingar_time == 0 || SDL_GetTicks() - wingar_time >= 3500)
+        is_wingartime = true;
+        
+    else is_wingartime = false;
+}
+
