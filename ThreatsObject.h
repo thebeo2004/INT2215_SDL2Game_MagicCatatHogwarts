@@ -36,6 +36,9 @@ class ThreatsObject: public BaseObject
 
         bool is_dead;
 
+        //Phục vụ cho việc tính điểm ngay khi vừa Die
+        bool calculate_score;
+
         enum Animation
         {
             NORMAL_RIGHT, NORMAL_LEFT,
@@ -81,4 +84,6 @@ class ThreatsObject: public BaseObject
 
         void Lightning();
         void Sunken();
+
+        int GetScore(Entity main_character);
 };

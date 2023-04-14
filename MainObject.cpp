@@ -13,7 +13,8 @@ MainObject::MainObject()
     
     life_point = 5;
 
-    num = 3;
+    threats_die = 0;
+    num = 1;
 
     is_scared = true;
 
@@ -51,6 +52,12 @@ MainObject::~MainObject()
 
     Mix_FreeChunk(wind_effect);
     wind_effect = NULL;
+
+    wingar_displayed.free();
+    heart_displayed.free();
+    lightning_displayed.free();
+
+    ultimate_skill.free();
 }
 
 int MainObject::getPosX()
@@ -316,3 +323,11 @@ void MainObject::Update_WingarTime()
     else is_wingartime = false;
 }
 
+void MainObject::Count_ThreatsDie(int num_die)
+{
+    threats_die += num_die;
+
+    num = min(5, num + threats_die/10);
+
+    threats_die %= 10;
+}

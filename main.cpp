@@ -7,6 +7,10 @@
 #include "ImpTimer.cpp"
 #include "ThreatsObject.h"
 #include "ThreatsObject.cpp"
+#include "LoadFont.h"
+#include "LoadFont.cpp"
+#include "Score.h"
+#include "Score.cpp"
 
 bool init();
 bool loadMedia();
@@ -21,6 +25,9 @@ vector<int> v = {2500, 5000, 7500, 9500, 12000, 16000, 21000, 25000, 30000};
 
 //BGM of game
 Mix_Music *BGM = NULL;
+
+//Score of gaming process
+Score score;
 
 bool init()
 {
@@ -96,7 +103,9 @@ bool loadMedia()
 
     //Load font
     gFont_22 = TTF_OpenFont("font/default.ttf", 22);
-    if (gFont_22 == NULL)
+    gFont_40 = TTF_OpenFont("font/default.ttf", 40);
+    gFont_38 = TTF_OpenFont("font/default.ttf", 38);
+    if (gFont_22 == NULL || gFont_40 == NULL || gFont_38 == NULL)
     {
         cout << "Failed to load lazy font! " << TTF_GetError() << "\n";
         success = false;
@@ -107,11 +116,12 @@ bool loadMedia()
 
 void close()
 {
-    character.free();
-    gBackground.free();
-
     TTF_CloseFont(gFont_22);
+    TTF_CloseFont(gFont_38);
+    TTF_CloseFont(gFont_40);
+    gFont_40 = NULL;
     gFont_22 = NULL;
+    gFont_38 = NULL;
 
     Mix_FreeMusic(BGM);
     BGM = NULL;
@@ -158,6 +168,7 @@ void Initialize_Threats()
     }
 }
 
+
 int main(int argc, char * args[])
 {
     srand(time(0));
@@ -168,15 +179,17 @@ int main(int argc, char * args[])
     if (!loadMedia()) return -1;
 
     Initialize_Threats();
-    
+
     SDL_Event e;
+
+    Mix_PlayMusic(BGM, -1);
+
+    score.SetFont();
+    
+    int batch = 0;
 
     ImpTimer timer;
     int time_one_frame = 1000/FRAME_PER_SECOND;
-
-    Mix_PlayMusic(BGM, -1);
-    
-    int batch = 0;
 
     while(true)
     {
@@ -221,12 +234,17 @@ int main(int argc, char * args[])
                 
                 if (character.check_sunken())
                     threats[i][j].Sunken();
-                
+
+                score.Update_ScoreLoop(threats[i][j].GetScore(character.getReal_Position()));
                 threats[i][j].render();
             }
         }
 
+        character.Count_ThreatsDie(score.get_die());
+
         character.render();
+
+        score.render();
 
         SDL_RenderPresent(gRenderer);
 

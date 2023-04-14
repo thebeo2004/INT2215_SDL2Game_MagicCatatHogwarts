@@ -29,7 +29,7 @@ void Wingar::render()
         loadFromFile("character/wingar_displayed.png"),
         is_loaded = true;
 
-    SDL_Rect renderquad = {SCREEN_WIDTH/2 + 150, 0, 31, 50};
+    SDL_Rect renderquad = {SCREEN_WIDTH/2 + 120, 0, 31, 50};
 
     SDL_RenderCopy(gRenderer, mTexture, &frame_clip[frame_], &renderquad);
 

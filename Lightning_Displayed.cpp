@@ -32,7 +32,7 @@ void Lightning::SetFont()
 
 void Lightning::loadFont(int num)
 {
-    if (num <= 0) return;
+    if (num < 0) return;
 
     string txt = "x ";
     txt += char(num + 48);
@@ -47,14 +47,14 @@ void Lightning::render(int num)
     if (!is_loaded)
         loadFromFile("character/lightning_displayed.png"),
         is_loaded = true;
-    if (num > 0)
-    {  
-        SDL_Rect renderquad = {SCREEN_WIDTH/2, -5, 20, 50};
-        
-        SDL_RenderCopy(gRenderer, mTexture, &frame_clip[frame_], &renderquad);
+    // if (num > 0)
 
-        frame_ = (frame_ + 1) % 6;
-    }
+    SDL_Rect renderquad = {SCREEN_WIDTH/2, -5, 20, 50};
+        
+    SDL_RenderCopy(gRenderer, mTexture, &frame_clip[frame_], &renderquad);
+
+    frame_ = (frame_ + 1) % 6;
+
 
     loadFont(num);
 }

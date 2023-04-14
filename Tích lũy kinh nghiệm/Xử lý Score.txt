@@ -1,0 +1,20 @@
+- Ý tưởng tính Score:
+    
+    Xét trong current loop:
+
+        Tổng điểm tính vào Score:
+            +) Tổng bình phương khoảng cách từ các Threats vừa die trong loop đó.
+            +) Nhân với hệ số: Số lượng Threats die trong loop đó.
+
+    => Cách xử lý: Làm sao để biết có threat vừa Die trong loop đó.
+
+        +) Status của Threats chắc chắn phải chuyển sang Die.
+        +) Khởi tạo thêm 1 biến, để xác định chỉ lấy 1 lần Die duy nhất của Threats
+            -> Lý giải: Vì trạng thái Die đi kèm việc load Animation cho Die -> Trên thực tế trên code chạy sẽ nhiều lần Die.
+                -> Trong Threats, thì có sẵn thuộc tính is_dead -> Nó chỉ phục vụ cho việc giải phóng âm thanh, font,.. ở cuối của Die (sau khi load Die animation xong)
+                    (Nên không thể dùng is_dead để làm cột mốc cho lần xác định sự Die bắt đầu)
+
+=> Có 1 class Score riêng, trong đó có 2 thuộc tính thuộc kiểu Font (lấy từ class LoadFont)
+    -> Hiển thị điểm.
+    -> Hiển thị số threats die trong mỗi loop.
+    

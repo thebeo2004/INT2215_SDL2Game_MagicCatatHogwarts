@@ -33,7 +33,8 @@ class MainObject : public BaseObject
         bool is_dead, is_scared;
 
         //Số lần sử dụng skill expecto
-        int num;
+        //threats_die -> Xác định số lượng threats die -> Cứ 10 threats die -> num++
+        int num, threats_die;
 
         bool set_font;
 
@@ -70,12 +71,20 @@ class MainObject : public BaseObject
     public:
         MainObject();
         ~ MainObject();
+
         void render();
+
         void HandelInputAction(SDL_Event events);
+
         void set_clips();
+
+        void free();
+
         int getPosX();
         int getPosY();
+
         void hurt();
+
         //Calculate Real Position of Entity
         Entity getReal_Position();
         
@@ -85,5 +94,7 @@ class MainObject : public BaseObject
 
         //Update thời gian và check xem đã đủ 5s kể từ lần cuối dùng Wingar hay chưa?
         void Update_WingarTime();
+
+        void Count_ThreatsDie(int num_die);
 
 };

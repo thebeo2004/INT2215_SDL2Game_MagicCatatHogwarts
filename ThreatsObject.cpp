@@ -18,6 +18,8 @@ ThreatsObject::ThreatsObject()
     max_y = 100 + rand() % 130;
 
     is_soundeffect = true;
+
+    calculate_score = true;
 }
 
 Entity ThreatsObject::getReal_Position()
@@ -123,6 +125,8 @@ void ThreatsObject::attack()
     else y_pos_ += 10;
 
     frame = 0;
+
+    calculate_score = false;
 }
 
 void ThreatsObject::set_clips()
@@ -337,5 +341,20 @@ void ThreatsObject::HandleInputAction(SDL_Event events)
     {
         is_free = true;
     }
+}
+
+int ThreatsObject::GetScore(Entity a)
+{
+    if (!calculate_score || status_ != DIE)
+        return 0;
+
+    calculate_score = false;
+
+    Entity b = getReal_Position();
+
+    //Bình phương khoảng cách giữa Main -> Threats -> Phục vụ tính điểm.
+    return sqrt(pow(((a.x_left + a.x_right)/2 - (b.x_left + b.x_right)/2), 2) +
+
+            pow(((a.y_down + a.y_top)/2 - (b.y_down + b.y_top)/2), 2))/5;
 }
 
