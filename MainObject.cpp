@@ -53,6 +53,9 @@ MainObject::~MainObject()
     Mix_FreeChunk(wind_effect);
     wind_effect = NULL;
 
+    Mix_FreeChunk(stupefy_effect);
+    stupefy_effect = NULL;
+
     wingar_displayed.free();
     heart_displayed.free();
     lightning_displayed.free();
@@ -87,6 +90,7 @@ void MainObject::set_clips()
     mouse_effect = Mix_LoadWAV("sound/mouse0.mp3");
     expectopetronum_effect = Mix_LoadWAV("sound/expecto_patronum.mp3");
     wingdardiumleviosa_effect = Mix_LoadWAV("sound/wingdardium_leviosa.mp3");
+    stupefy_effect = Mix_LoadWAV("sound/stupefy.mp3");
     thunder_effect = Mix_LoadWAV("sound/thunder.ogg");
     wind_effect = Mix_LoadWAV("sound/wind.ogg");
 
@@ -148,6 +152,8 @@ void MainObject::render()
             loadFromFile("character/scared.png");
         else if (status_ == HURT && frame < NUM_FRAME_CHARACTER[status_])
             loadFromFile("character/hurt.png");
+        else if (status_ == HEART && frame < NUM_FRAME_CHARACTER[status_])
+            loadFromFile("character/heart.png");
         else if (status_ == DRAWING && frame < NUM_FRAME_CHARACTER[status_]) 
             loadFromFile("character/drawing.png");
         else if (status_ == LIGHTNING && frame < NUM_FRAME_CHARACTER[status_])
@@ -330,4 +336,24 @@ void MainObject::Count_ThreatsDie(int num_die)
     num = min(5, num + threats_die/10);
 
     threats_die %= 10;
+}
+
+int MainObject::get_LifePoint()
+{
+    return life_point;
+}
+
+void MainObject::Heal()
+{
+    if (status_ == DIE) return;
+
+    frame = 0;
+
+    status_ = HEART;
+
+    life_point++;
+
+    Mix_PlayChannel(-1, stupefy_effect, 0);
+
+    ultimate_skill.stupefy();
 }

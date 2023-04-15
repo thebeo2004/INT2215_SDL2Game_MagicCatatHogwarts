@@ -11,7 +11,7 @@
 #include "Wingar_Displayed.h"
 #include "Wingar_Displayed.cpp"
 
-int NUM_FRAME_CHARACTER[] = {6, 6, 11, 6, 5, 8, 8, 4, 16, 18};
+int NUM_FRAME_CHARACTER[] = {6, 6, 11, 6, 8, 8, 8, 4, 16, 18};
 
 class MainObject : public BaseObject
 {
@@ -65,8 +65,10 @@ class MainObject : public BaseObject
         Mix_Chunk* mouse_effect;
         Mix_Chunk* expectopetronum_effect;
         Mix_Chunk* wingdardiumleviosa_effect;
+        Mix_Chunk* stupefy_effect;
         Mix_Chunk* thunder_effect;
         Mix_Chunk* wind_effect;
+        
 
     public:
         MainObject();
@@ -97,4 +99,7 @@ class MainObject : public BaseObject
 
         void Count_ThreatsDie(int num_die);
 
+        int get_LifePoint();
+
+        void Heal();
 };

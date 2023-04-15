@@ -1,0 +1,10 @@
+Y tưởng: Khi mà main lần đầu tiên còn còn 3 và còn 1
+    -> Xuất hiện trong x (s) -> Bấm vào -> Cộng mạng cho main.
+        -> Đồng thời xuất hiện hiệu ứng:
+            +) Vẽ hình trái tim -> status_ của main = HEART
+            +) Tittle: Hiển thị Stupefy (Ứng với ultimate_skill trong mainobject)
+            +) Hiệu ứng âm thanh.
+
+=> Xử lý cụ thể:
+    +) Ban đầu, thành lập 1 class riêng với tên Support (kế thừa từ BaseObject)
+        -> Sẽ lập 2 biến ứng với kiểu dữ liệu Support -> Xây dựng cho việ còn 1/3

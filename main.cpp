@@ -1,3 +1,4 @@
+//@Author: Nguyen Huu The aka Ca_Uop_Muoi
 #include "CommonFunc.h"
 #include "BaseObject.h"
 #include "BaseObject.cpp"
@@ -11,6 +12,8 @@
 #include "LoadFont.cpp"
 #include "Score.h"
 #include "Score.cpp"
+#include "Support.h"
+#include "Support.cpp"
 
 bool init();
 bool loadMedia();
@@ -29,6 +32,10 @@ Mix_Music *BGM = NULL;
 //Score of gaming process
 Score score;
 
+//Heal mạng cho main
+Support life_4th(SCREEN_WIDTH - 80, SCREEN_HEIGHT/2 - 20, 4);
+Support life_2th(SCREEN_WIDTH - 80, 75, 2);
+
 bool init()
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -36,7 +43,7 @@ bool init()
     
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 
-    gWindow = SDL_CreateWindow("Ca_Uop_Muoi", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    gWindow = SDL_CreateWindow("Magic-Cat-at_Hogwarts, @Author: Nguyen Huu The aka Ca_Uop_Muoi", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (gWindow == NULL)
         return false;
     
@@ -168,7 +175,6 @@ void Initialize_Threats()
     }
 }
 
-
 int main(int argc, char * args[])
 {
     srand(time(0));
@@ -191,6 +197,9 @@ int main(int argc, char * args[])
     ImpTimer timer;
     int time_one_frame = 1000/FRAME_PER_SECOND;
 
+    life_4th.set_clips();
+    life_2th.set_clips();
+
     while(true)
     {
         timer.start();
@@ -202,11 +211,17 @@ int main(int argc, char * args[])
 
         if (batch <= 8 && SDL_GetTicks() >= v[batch]) batch++;
 
+        life_4th.check_Displaying(character.get_LifePoint());
+        life_2th.check_Displaying(character.get_LifePoint());
+
         if (SDL_PollEvent(&e) != 0)
         {
             if (e.type == SDL_QUIT) break;
 
             character.HandelInputAction(e);
+
+            if (life_4th.HandleInputAction(e)) character.Heal();
+            if (life_2th.HandleInputAction(e)) character.Heal();
 
             for(int i = 0; i < batch; i++)
             {
@@ -243,6 +258,9 @@ int main(int argc, char * args[])
         character.Count_ThreatsDie(score.get_die());
 
         character.render();
+
+        life_4th.render();
+        life_2th.render();
 
         score.render();
 
