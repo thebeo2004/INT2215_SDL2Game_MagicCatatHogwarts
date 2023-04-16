@@ -14,6 +14,8 @@
 #include "Score.cpp"
 #include "Support.h"
 #include "Support.cpp"
+#include "Menu.h"
+#include "Menu.cpp"
 
 bool init();
 bool loadMedia();
@@ -36,6 +38,8 @@ Score score;
 Support life_4th(SCREEN_WIDTH - 80, SCREEN_HEIGHT/2 - 20, 4);
 Support life_2th(SCREEN_WIDTH - 80, 75, 2);
 
+Menu menu;
+
 bool init()
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -43,7 +47,7 @@ bool init()
     
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 
-    gWindow = SDL_CreateWindow("Magic-Cat-at_Hogwarts, @Author: Nguyen Huu The aka Ca_Uop_Muoi", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    gWindow = SDL_CreateWindow("Magic-Cat-at-Hogwarts, @Author: Nguyen Huu The aka Ca_Uop_Muoi", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (gWindow == NULL)
         return false;
     
@@ -188,7 +192,8 @@ int main(int argc, char * args[])
 
     SDL_Event e;
 
-    Mix_PlayMusic(BGM, -1);
+    bool is_playingBGM = false;
+    // Mix_PlayMusic(BGM, -1);
 
     score.SetFont();
     
@@ -207,62 +212,82 @@ int main(int argc, char * args[])
         SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
         SDL_RenderClear(gRenderer);
 
-        gBackground.render(0, 0, NULL);
-
-        if (batch <= 8 && SDL_GetTicks() >= v[batch]) batch++;
-
-        life_4th.check_Displaying(character.get_LifePoint());
-        life_2th.check_Displaying(character.get_LifePoint());
-
-        if (SDL_PollEvent(&e) != 0)
+        if (!menu.playing())
         {
-            if (e.type == SDL_QUIT) break;
+            if (SDL_PollEvent(&e) != 0)
+            {
+                if (e.type == SDL_QUIT) break;
 
-            character.HandelInputAction(e);
+                menu.HandleInputAction(e);
+            }
 
-            if (life_4th.HandleInputAction(e)) character.Heal();
-            if (life_2th.HandleInputAction(e)) character.Heal();
+            menu.render();
+            
+            time_start_playing = SDL_GetTicks();
+        }
+        else
+        {
+            if (!is_playingBGM && SDL_GetTicks() - time_start_playing >= 1500)
+                Mix_PlayMusic(BGM, -1),
+                is_playingBGM = true;
 
+            gBackground.render(0, 0, NULL);
+
+            if (batch <= 8 && SDL_GetTicks() - time_start_playing >= v[batch]) batch++;
+
+            life_4th.check_Displaying(character.get_LifePoint());
+            life_2th.check_Displaying(character.get_LifePoint());
+
+            if (SDL_PollEvent(&e) != 0)
+            {
+                if (e.type == SDL_QUIT) break;
+
+                character.HandelInputAction(e);
+
+                if (life_4th.HandleInputAction(e)) character.Heal();
+                if (life_2th.HandleInputAction(e)) character.Heal();
+
+                for(int i = 0; i < batch; i++)
+                {
+                    for(int j = 0; j < int(threats[i].size()); j++)
+                    {
+                        threats[i][j].HandleInputAction(e);
+                    }
+                }
+            }
+
+            //check collision
             for(int i = 0; i < batch; i++)
             {
                 for(int j = 0; j < int(threats[i].size()); j++)
                 {
-                    threats[i][j].HandleInputAction(e);
+                    if (isCollision(character.getReal_Position(), threats[i][j].getReal_Position()))
+                    {
+                        character.hurt();
+
+                        threats[i][j].attack();
+                    }
+
+                    if (character.check_lightning())
+                        threats[i][j].Lightning();
+                    
+                    if (character.check_sunken())
+                        threats[i][j].Sunken();
+
+                    score.Update_ScoreLoop(threats[i][j].GetScore(character.getReal_Position()));
+                    threats[i][j].render();
                 }
             }
+
+            character.Count_ThreatsDie(score.get_die());
+
+            character.render();
+
+            life_4th.render();
+            life_2th.render();
+
+            score.render();
         }
-
-        //check collision
-        for(int i = 0; i < batch; i++)
-        {
-            for(int j = 0; j < int(threats[i].size()); j++)
-            {
-                if (isCollision(character.getReal_Position(), threats[i][j].getReal_Position()))
-                {
-                    character.hurt();
-
-                    threats[i][j].attack();
-                }
-
-                if (character.check_lightning())
-                    threats[i][j].Lightning();
-                
-                if (character.check_sunken())
-                    threats[i][j].Sunken();
-
-                score.Update_ScoreLoop(threats[i][j].GetScore(character.getReal_Position()));
-                threats[i][j].render();
-            }
-        }
-
-        character.Count_ThreatsDie(score.get_die());
-
-        character.render();
-
-        life_4th.render();
-        life_2th.render();
-
-        score.render();
 
         SDL_RenderPresent(gRenderer);
 

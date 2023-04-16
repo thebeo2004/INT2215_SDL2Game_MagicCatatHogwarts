@@ -1,0 +1,23 @@
+- Khi add thêm menu đầu tiên
+    -> Nguy cơ về căn chỉnh thời gian.
+        Xét những phần ảnh hưởng:
+            +) Threats: Căn thời gian xuất hiện từ lúc hiện game -> Sẽ bị dồn.
+                    -> Hướng xử lý: Thêm biến toàn cục: time_start ~ thời gian lúc bắt đầu chơi
+                        -> Chỉ cần dùng SDL_GetTicks() - time_start -> Check thời gian xuất hiện.
+                            -> Đã fix
+            +) Các skill, loadfont rồi skill_displaying không ảnh hưởng vì căn thời gian trong lúc chơi -> Không ảnh hưởng.
+            +) Support không ảnh hưởng.
+            +) Main: 
+                Bị ảnh hưởng: Phần scared -> Đã fix.
+                Phần còn lại: không bị ảnh hưởng.
+
+- Làm menu:
+    +) Tạo 1 class Menu riêng, kế thừa BaseObject
+        -> Hiển thị ảnh ban đầu.
+        -> Nhận chuột -> Đưa vào game.
+
+-> Về cơ bản thì tạo menu khá giống gBackground (dùng trực tiếp BaseObject), khác nhau ở menu có nhận chuột để tiến đến game
+    -> Có thêm HandelInputAction()
+
+- ảnh load intro rất xấu (xấu nguyên cả game)
+    -> Load thêm khói intro: smoke left, smoke_right

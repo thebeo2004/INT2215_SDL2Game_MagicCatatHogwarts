@@ -135,7 +135,7 @@ void MainObject::render()
     }
     else
     {
-        if (SDL_GetTicks() >= 2900 && is_scared)
+        if (SDL_GetTicks() - time_start_playing >= 2900 && is_scared)
         {
             frame = 0;
             status_ = SCARED;
