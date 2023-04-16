@@ -60,6 +60,9 @@ void Menu::HandleInputAction(SDL_Event e)
 
         if (e.type == SDL_MOUSEBUTTONDOWN)
             is_playing = true,
+            free(),
+            smoke_left.free(),
+            smoke_right.free(),
             Mix_PlayChannel(-1, intro, 0);
     }
 

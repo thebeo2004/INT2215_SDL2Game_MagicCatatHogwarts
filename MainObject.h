@@ -30,7 +30,11 @@ class MainObject : public BaseObject
 
         bool is_free;
 
+        //is_dead: Để giữ cho trạng thái va chạm
         bool is_dead, is_scared;
+
+        //Xác định trạng thái game, sau khi đã load hết frame die/victory
+        bool game_over;
 
         //Số lần sử dụng skill expecto
         //threats_die -> Xác định số lượng threats die -> Cứ 10 threats die -> num++
@@ -102,4 +106,8 @@ class MainObject : public BaseObject
         int get_LifePoint();
 
         void Heal();
+
+        bool is_gameover();
+
+        void victory();
 };

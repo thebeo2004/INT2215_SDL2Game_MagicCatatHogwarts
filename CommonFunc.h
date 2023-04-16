@@ -20,6 +20,7 @@ const int FRAME_THREAT_HEIGHT = 150;
 const int FRAME_PER_SECOND = 20;
 
 static int time_start_playing = 0;
+static int num_threats_disappear = 0;
 
 //calculate real position of object in frame
 struct Entity

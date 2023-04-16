@@ -74,3 +74,8 @@ void Score::render()
 
     score_displayed.render(SCREEN_WIDTH - 10 - score_displayed.getWidth(), 0);
 }
+
+int Score::get_score()
+{
+    return score;
+}

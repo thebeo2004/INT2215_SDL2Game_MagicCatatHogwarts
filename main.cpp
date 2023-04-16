@@ -16,6 +16,8 @@
 #include "Support.cpp"
 #include "Menu.h"
 #include "Menu.cpp"
+#include "GameOver.h"
+#include "GameOver.cpp"
 
 bool init();
 bool loadMedia();
@@ -39,6 +41,9 @@ Support life_4th(SCREEN_WIDTH - 80, SCREEN_HEIGHT/2 - 20, 4);
 Support life_2th(SCREEN_WIDTH - 80, 75, 2);
 
 Menu menu;
+
+//Hien thi ket thuc
+Over the_end;
 
 bool init()
 {
@@ -205,6 +210,8 @@ int main(int argc, char * args[])
     life_4th.set_clips();
     life_2th.set_clips();
 
+    the_end.SetFont();
+
     while(true)
     {
         timer.start();
@@ -225,7 +232,7 @@ int main(int argc, char * args[])
             
             time_start_playing = SDL_GetTicks();
         }
-        else
+        else if (!character.is_gameover())
         {
             if (!is_playingBGM && SDL_GetTicks() - time_start_playing >= 1500)
                 Mix_PlayMusic(BGM, -1),
@@ -233,7 +240,7 @@ int main(int argc, char * args[])
 
             gBackground.render(0, 0, NULL);
 
-            if (batch <= 8 && SDL_GetTicks() - time_start_playing >= v[batch]) batch++;
+            if (batch <= 2 && SDL_GetTicks() - time_start_playing >= v[batch]) batch++;
 
             life_4th.check_Displaying(character.get_LifePoint());
             life_2th.check_Displaying(character.get_LifePoint());
@@ -287,6 +294,19 @@ int main(int argc, char * args[])
             life_2th.render();
 
             score.render();
+
+            if (num_threats_disappear == 7) character.victory();
+        }
+        else if (character.is_gameover())
+        {
+            if (SDL_PollEvent(&e) != 0)
+                if (e.type == SDL_QUIT) break;
+
+            if (character.get_LifePoint() > 0)
+                the_end.victory(score.get_score());
+            else the_end.lose();
+
+            the_end.render();
         }
 
         SDL_RenderPresent(gRenderer);
@@ -294,7 +314,6 @@ int main(int argc, char * args[])
         int imp_time_real = timer.get_ticks();
 
         if (imp_time_real < time_one_frame) SDL_Delay(time_one_frame - imp_time_real);
-        
     }
 
     close();

@@ -32,6 +32,8 @@ MainObject::MainObject()
 
     wingar_time = 0;
     is_wingartime = true;
+
+    game_over = false;
 }
 
 MainObject::~MainObject()
@@ -146,7 +148,19 @@ void MainObject::render()
         {
             if (frame < NUM_FRAME_CHARACTER[status_])
                 loadFromFile("character/die.png");
-            else BaseObject::free();
+            else
+            {
+                BaseObject::free();
+
+                game_over = true;
+            }
+        }
+        else if (status_ == VICTORY)
+        {
+            if (frame < NUM_FRAME_CHARACTER[status_])
+                loadFromFile("character/victory.png");
+            else 
+                game_over = true;
         }
         else if (status_ == SCARED && frame < NUM_FRAME_CHARACTER[status_])
             loadFromFile("character/scared.png");
@@ -190,6 +204,8 @@ void MainObject::render()
 void MainObject::HandelInputAction(SDL_Event e)
 {
     if (status_ == DIE) return;
+
+    if (status_ == VICTORY) return;
 
     if (e.type == SDL_KEYDOWN)
     {
@@ -356,4 +372,18 @@ void MainObject::Heal()
     Mix_PlayChannel(-1, stupefy_effect, 0);
 
     ultimate_skill.stupefy();
+}
+
+bool MainObject::is_gameover()
+{
+    return game_over;
+}
+
+void MainObject::victory()
+{
+    if (status_ != VICTORY && life_point > 0)
+
+        status_ = VICTORY,
+
+        frame = 0;
 }

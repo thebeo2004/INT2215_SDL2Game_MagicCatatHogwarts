@@ -35,4 +35,6 @@ class Score
         int get_die();
 
         void render();
+
+        int get_score();
 };

@@ -239,6 +239,8 @@ void ThreatsObject::render()
 
                 y_pos_ = 0;
 
+                num_threats_disappear++;
+
                 return;
             }
             else return;
