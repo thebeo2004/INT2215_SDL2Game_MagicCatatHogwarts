@@ -58,7 +58,7 @@ void Over::render()
 
         result_displaying.render(SCREEN_WIDTH - 295, 150);
         
-        score_displaying.render(SCREEN_WIDTH - 230, 200);
+        score_displaying.render(SCREEN_WIDTH - 150 - score_displaying.getWidth(), 200);
     }
     else
     {

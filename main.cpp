@@ -156,14 +156,14 @@ void close()
 void Resize_ThreatsList()
 {
     threats[0].resize(1);
-    threats[1].resize(1);
+    threats[1].resize(3);
     threats[2].resize(5);
     threats[3].resize(5);
-    threats[4].resize(5);
-    threats[5].resize(6);
-    threats[6].resize(6);
-    threats[7].resize(7);
-    threats[8].resize(8);
+    threats[4].resize(7);
+    threats[5].resize(9);
+    threats[6].resize(7);
+    threats[7].resize(10);
+    threats[8].resize(12);
 }
 
 void Initialize_Threats()
@@ -240,7 +240,7 @@ int main(int argc, char * args[])
 
             gBackground.render(0, 0, NULL);
 
-            if (batch <= 2 && SDL_GetTicks() - time_start_playing >= v[batch]) batch++;
+            if (batch <= 9 && SDL_GetTicks() - time_start_playing >= v[batch]) batch++;
 
             life_4th.check_Displaying(character.get_LifePoint());
             life_2th.check_Displaying(character.get_LifePoint());
@@ -295,7 +295,7 @@ int main(int argc, char * args[])
 
             score.render();
 
-            if (num_threats_disappear == 7) character.victory();
+            if (num_threats_disappear == TOTAL_THREATS) character.victory();
         }
         else if (character.is_gameover())
         {

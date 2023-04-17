@@ -21,11 +21,15 @@ Menu::~Menu()
 
     Mix_FreeChunk(intro);
     intro = NULL;
+
+    Mix_FreeChunk(move_mouseEffect);
+    move_mouseEffect = NULL;
 }
 
 bool Menu::playing()
 {
     intro = Mix_LoadWAV("sound/intro.ogg");
+    move_mouseEffect = Mix_LoadWAV("sound/menu_music.ogg");
 
     return is_playing;
 }
@@ -56,6 +60,9 @@ void Menu::HandleInputAction(SDL_Event e)
     if ((e.button.x > 0 && e.button.x < SCREEN_WIDTH) && 
         (e.button.y > 0 && e.button.y < SCREEN_HEIGHT))
     {
+        if (is_intro1)
+            Mix_PlayChannel(-1, move_mouseEffect, 0);
+
         is_intro1 = false;
 
         if (e.type == SDL_MOUSEBUTTONDOWN)
@@ -63,6 +70,7 @@ void Menu::HandleInputAction(SDL_Event e)
             free(),
             smoke_left.free(),
             smoke_right.free(),
+            Mix_FreeChunk(move_mouseEffect),
             Mix_PlayChannel(-1, intro, 0);
     }
 

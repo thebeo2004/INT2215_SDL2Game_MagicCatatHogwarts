@@ -84,6 +84,7 @@ class Menu: public BaseObject
     private:
 
         Mix_Chunk* intro;
+        Mix_Chunk* move_mouseEffect;
 
         bool is_playing;
 

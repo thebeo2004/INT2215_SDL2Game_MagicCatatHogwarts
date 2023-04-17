@@ -11,7 +11,7 @@
 #include "Wingar_Displayed.h"
 #include "Wingar_Displayed.cpp"
 
-int NUM_FRAME_CHARACTER[] = {6, 6, 11, 6, 8, 8, 8, 4, 16, 18};
+int NUM_FRAME_CHARACTER[] = {6, 6, 11, 6, 8, 8, 8, 4, 16, 36};
 
 class MainObject : public BaseObject
 {
@@ -19,7 +19,7 @@ class MainObject : public BaseObject
         //position of frame
         int x_pos_, y_pos_;
 
-        SDL_Rect frame_clip_[20];
+        SDL_Rect frame_clip_[36];
 
         //Thự tứ của từng frame trong từng trạng thái.
         int frame;

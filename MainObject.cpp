@@ -98,7 +98,7 @@ void MainObject::set_clips()
 
     if (mWidth > 0 && mHeight > 0)
     {
-        for(int i = 0; i < 20; i++)
+        for(int i = 0; i < 36; i++)
         {
             frame_clip_[i].x = i*FRAME_CHARACTER_WIDTH;
             frame_clip_[i].y = 0;
@@ -159,7 +159,7 @@ void MainObject::render()
         {
             if (frame < NUM_FRAME_CHARACTER[status_])
                 loadFromFile("character/victory.png");
-            else 
+            else
                 game_over = true;
         }
         else if (status_ == SCARED && frame < NUM_FRAME_CHARACTER[status_])

@@ -1,0 +1,24 @@
+Về cơ bản, game đã xong. Đã có tất cả.
+
+Tuy nhiên, những yếu tố cần thêm -> Khiến game trở nên trọn vẹn hơn.
+
+- Phần intro: Khi di chuột vào phần âm thanh -> Phát ra tiếng nhạc
+    -> FIXED
+- Phần kết thúc game ở victory:
+    +) Tăng độ dài của frame Victory, có phần hơi nhanh.
+        ->  FIXED
+    +) Add thêm victory sound tạo hiệu ứng.
+        -> FIXED
+- Fix lại kịch bản xuất hiện của threats
+    +) Cụ thể: Muốn cốt truyện trở nên kịch tính hơn.
+        Bath: Tổng 15 đợt.
+            5 đợt đầu: máu 1
+            5 đợt sau: máu 1 và 2.
+            2 đợt sau: máu 1 và 2: tỉ lệ 1/2
+            3 đợt sau cùng: máu 2
+
+- Thời gian lần lượt: 2500 (1) -> 5000 (3) -> 6500 (5) -> 9000 (7)->  12000 (10)
+                    
+                        16000 (5) -> 20000 (6) -> 22000 (7) -> 25000 (7) -> 30000 (9)
+
+                        35000 (5) -> 40000 (5) ->  47000 (6) -> 54000 (6) -> 60000 (8)
