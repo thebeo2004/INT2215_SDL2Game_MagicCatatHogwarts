@@ -49,8 +49,7 @@ class ThreatsObject: public BaseObject
 
         Font gText;
         Skill lightning_attack;
-        Mix_Chunk* sound_effect;
-
+        
         bool is_soundeffect;
 
     public:
@@ -86,4 +85,5 @@ class ThreatsObject: public BaseObject
         void Sunken();
 
         int GetScore(Entity main_character);
+
 };

@@ -22,14 +22,10 @@ Support::Support(int x, int y, int num)
 Support::~Support()
 {
     free();
-
-    Mix_FreeChunk(heal_effect);
-    heal_effect = NULL;
 }
 
 void Support::set_clips()
 {
-    heal_effect = Mix_LoadWAV("sound/heal.ogg");
 
     for(int i = 0; i < 5; i++)
     {
@@ -91,8 +87,6 @@ bool Support::HandleInputAction(SDL_Event e)
             if (isInside(e.button.x, e.button.y))
             {
                 is_dead = true;
-
-                Mix_PlayChannel(-1, heal_effect, 0);
 
                 return true;
             }

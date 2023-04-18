@@ -33,6 +33,8 @@ vector<int> v = {2500, 5000, 7500, 9500, 12000, 16000, 21000, 25000, 30000};
 //BGM of game
 Mix_Music *BGM = NULL;
 
+
+
 //Score of gaming process
 Score score;
 
@@ -72,7 +74,7 @@ bool init()
 		return false;
     }
 
-    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 4, 2048 ) < 0 )
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 3, 2048 ) < 0 )
 	{
 		printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
 		return false;
@@ -109,11 +111,14 @@ bool loadMedia()
         character.set_clips();
     }
 
-    //Load music
+    //Load music and sound effect of threats
 	BGM = Mix_LoadMUS( "sound/BGM.ogg" );
-	if( BGM == NULL )
+
+    sound_threat_effect = Mix_LoadWAV("sound/threat_die.ogg");
+
+	if( BGM == NULL | sound_threat_effect == NULL)
 	{
-		printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
+		printf( "Failed to load beat music && threats effect! SDL_mixer Error: %s\n", Mix_GetError() );
 		success = false;
 	}
 
@@ -140,7 +145,9 @@ void close()
     gFont_38 = NULL;
 
     Mix_FreeMusic(BGM);
+    Mix_FreeChunk(sound_threat_effect);
     BGM = NULL;
+    sound_threat_effect = NULL;
 
     SDL_DestroyRenderer(gRenderer);
     SDL_DestroyWindow(gWindow);
@@ -156,12 +163,12 @@ void close()
 void Resize_ThreatsList()
 {
     threats[0].resize(1);
-    threats[1].resize(3);
-    threats[2].resize(5);
-    threats[3].resize(5);
+    threats[1].resize(5);
+    threats[2].resize(7);
+    threats[3].resize(7);
     threats[4].resize(7);
-    threats[5].resize(9);
-    threats[6].resize(7);
+    threats[5].resize(8);
+    threats[6].resize(9);
     threats[7].resize(10);
     threats[8].resize(12);
 }
@@ -212,6 +219,8 @@ int main(int argc, char * args[])
 
     the_end.SetFont();
 
+    bool free_after_game = false;
+
     while(true)
     {
         timer.start();
@@ -240,7 +249,7 @@ int main(int argc, char * args[])
 
             gBackground.render(0, 0, NULL);
 
-            if (batch <= 9 && SDL_GetTicks() - time_start_playing >= v[batch]) batch++;
+            if (batch <= 8 && SDL_GetTicks() - time_start_playing >= v[batch]) batch++;
 
             life_4th.check_Displaying(character.get_LifePoint());
             life_2th.check_Displaying(character.get_LifePoint());
@@ -299,6 +308,18 @@ int main(int argc, char * args[])
         }
         else if (character.is_gameover())
         {
+            if (!free_after_game)
+            { 
+                Mix_HaltMusic();
+                
+                for(int i = 0; i < 9; i++)
+                {
+                    for(int j = 0; j < int(threats[i].size()); j++)
+                        threats[i][j].free();
+                }
+                free_after_game = true;
+            }
+
             if (SDL_PollEvent(&e) != 0)
                 if (e.type == SDL_QUIT) break;
 

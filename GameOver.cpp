@@ -68,6 +68,6 @@ void Over::render()
 
         SDL_RenderCopy(gRenderer, mTexture, NULL, &renderquad);
 
-        result_displaying.render(SCREEN_WIDTH - 300, 150);
+        result_displaying.render(SCREEN_WIDTH - 265, 150);
     }
 }

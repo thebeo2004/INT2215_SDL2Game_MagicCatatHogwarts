@@ -21,8 +21,6 @@ class Support : public BaseObject
 
         SDL_Rect frame_clip_[5];
 
-        Mix_Chunk* heal_effect;
-
     public:
 
         Support(int x, int y, int num);

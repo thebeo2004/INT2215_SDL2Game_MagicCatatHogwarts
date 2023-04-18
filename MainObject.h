@@ -67,13 +67,14 @@ class MainObject : public BaseObject
         Wingar wingar_displayed;
 
         Mix_Chunk* mouse_effect;
+        Mix_Chunk* victory_effect;
+        Mix_Chunk* lose_effect;
         Mix_Chunk* expectopetronum_effect;
         Mix_Chunk* wingdardiumleviosa_effect;
         Mix_Chunk* stupefy_effect;
         Mix_Chunk* thunder_effect;
         Mix_Chunk* wind_effect;
-        
-
+    
     public:
         MainObject();
         ~ MainObject();

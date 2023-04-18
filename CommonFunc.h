@@ -18,10 +18,13 @@ const int FRAME_THREAT_WIDTH = 150;
 const int FRAME_THREAT_HEIGHT = 150;
 
 const int FRAME_PER_SECOND = 20;
-const int TOTAL_THREATS = 59;
+const int TOTAL_THREATS = 66;
 
 static int time_start_playing = 0;
 static int num_threats_disappear = 0;
+
+//Dùng 1 biến duy nhất load hiệu ứng âm thanh cho Threats -> Tối ưu hóa bộ nhớ
+static Mix_Chunk* sound_threat_effect = NULL;
 
 //calculate real position of object in frame
 struct Entity
@@ -46,6 +49,7 @@ static SDL_Renderer* gRenderer = NULL;
 static TTF_Font *gFont_22 = NULL;
 static TTF_Font *gFont_40 = NULL;
 static TTF_Font *gFont_38 = NULL;
+
 //Sử dụng kiểm tra va chạm giữa Threat và Main
 bool isCollision(Entity a, Entity b)
 {

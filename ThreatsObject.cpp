@@ -131,7 +131,6 @@ void ThreatsObject::attack()
 
 void ThreatsObject::set_clips()
 {
-    sound_effect = Mix_LoadWAV("sound/threat_die.ogg");
 
     if (mWidth > 0 && mHeight > 0)
     {
@@ -216,7 +215,7 @@ void ThreatsObject::render()
             loadLightning();
 
             if (is_soundeffect)
-                Mix_PlayChannel(-1, sound_effect, 0),
+                Mix_PlayChannel(-1, sound_threat_effect, 0),
                 is_soundeffect = false;
         }
         else
@@ -230,10 +229,6 @@ void ThreatsObject::render()
                 lightning_attack.free();
 
                 gText.free();
-
-                Mix_FreeChunk(sound_effect);
-
-                sound_effect = NULL;
 
                 x_pos_ = 0;
 

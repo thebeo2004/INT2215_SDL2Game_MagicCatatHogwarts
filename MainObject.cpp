@@ -43,6 +43,12 @@ MainObject::~MainObject()
     Mix_FreeChunk(mouse_effect);
     mouse_effect = NULL;
 
+    Mix_FreeChunk(victory_effect);
+    victory_effect = NULL;
+
+    Mix_FreeChunk(lose_effect);
+    lose_effect = NULL;
+
     Mix_FreeChunk(expectopetronum_effect);
     expectopetronum_effect = NULL;
 
@@ -90,6 +96,8 @@ void MainObject::hurt()
 void MainObject::set_clips()
 {
     mouse_effect = Mix_LoadWAV("sound/mouse0.mp3");
+    victory_effect = Mix_LoadWAV("sound/victory.ogg");
+    lose_effect = Mix_LoadWAV("sound/lose.ogg");
     expectopetronum_effect = Mix_LoadWAV("sound/expecto_patronum.mp3");
     wingdardiumleviosa_effect = Mix_LoadWAV("sound/wingdardium_leviosa.mp3");
     stupefy_effect = Mix_LoadWAV("sound/stupefy.mp3");
@@ -146,6 +154,9 @@ void MainObject::render()
 
         if (status_ == DIE)
         {
+            if (frame == 2) 
+                Mix_PlayChannel(-1, lose_effect, 0);
+            
             if (frame < NUM_FRAME_CHARACTER[status_])
                 loadFromFile("character/die.png");
             else
@@ -157,6 +168,9 @@ void MainObject::render()
         }
         else if (status_ == VICTORY)
         {
+            if (frame == 2)
+                Mix_PlayChannel(-1, victory_effect, 0);
+
             if (frame < NUM_FRAME_CHARACTER[status_])
                 loadFromFile("character/victory.png");
             else
@@ -219,7 +233,7 @@ void MainObject::HandelInputAction(SDL_Event e)
 
                 frame = 0;
 
-                Mix_PlayChannel(3, expectopetronum_effect, 0);
+                Mix_PlayChannel(2, expectopetronum_effect, 0);
 
                 ultimate_skill.expecto();
             }
@@ -254,7 +268,7 @@ void MainObject::HandelInputAction(SDL_Event e)
 
                 frame = 0;
 
-                Mix_PlayChannel(3, wingdardiumleviosa_effect, 0);
+                Mix_PlayChannel(2, wingdardiumleviosa_effect, 0);
 
                 ultimate_skill.wingardium();
             }
@@ -288,7 +302,7 @@ void MainObject::HandelInputAction(SDL_Event e)
         {  
             if (SDL_GetTicks() - lightning_time < 2000)
                 ultimate_skill.transfer(),
-                Mix_HaltChannel(3);
+                Mix_HaltChannel(2);
 
             lightning_time = 0;
 
@@ -298,7 +312,7 @@ void MainObject::HandelInputAction(SDL_Event e)
         {
             if (SDL_GetTicks() - sunken_time < 2000)
                 ultimate_skill.transfer(),
-                Mix_HaltChannel(3);
+                Mix_HaltChannel(2);
 
             sunken_time = 0;
             wingar_time = SDL_GetTicks();
@@ -349,9 +363,9 @@ void MainObject::Count_ThreatsDie(int num_die)
 {
     threats_die += num_die;
 
-    num = min(5, num + threats_die/10);
+    num = min(5, num + threats_die/15);
 
-    threats_die %= 10;
+    threats_die %= 15;
 }
 
 int MainObject::get_LifePoint()
