@@ -40,9 +40,9 @@ Entity ThreatsObject::getReal_Position()
 
 void ThreatsObject::setVal()
 {
-    x_val_ = 3 + SDL_GetTicks()/6000;
+    x_val_ = 3;
 
-    y_val_ = 2 + SDL_GetTicks()/7000;
+    y_val_ = 2;
 }
 
 void ThreatsObject::setPos(int PosX, int PosY, int batch)
