@@ -6,8 +6,6 @@
 ThreatsObject::ThreatsObject()
 {
     frame = 0;
-    
-    life_point = 1 + rand() % 2;
 
     is_free = true;
 
@@ -47,7 +45,7 @@ void ThreatsObject::setVal()
     y_val_ = 2 + SDL_GetTicks()/7000;
 }
 
-void ThreatsObject::setPos(int PosX, int PosY)
+void ThreatsObject::setPos(int PosX, int PosY, int batch)
 {
     x_pos_ = PosX;
     x0 = PosX;
@@ -56,6 +54,16 @@ void ThreatsObject::setPos(int PosX, int PosY)
     y0 = PosY;
 
     setVal();
+
+    if (batch <= 5) life_point = 1;
+    else if (batch <= 10) life_point = 1 + rand() % 2;
+    else if (batch <= 12)
+    {
+        int mod = rand() % 3;
+        if (mod < 2) life_point = 2;
+        else life_point = 1;
+    }
+    else life_point = 2;
 
     Entity pos = getReal_Position();
 

@@ -70,7 +70,7 @@ class ThreatsObject: public BaseObject
         //set value of step
         void setVal();
 
-        void setPos(int PosX, int PosY);
+        void setPos(int PosX, int PosY, int batch);
 
         void Update_Pos();
 

@@ -26,14 +26,12 @@ void close();
 BaseObject gBackground;
 MainObject character;
 
-vector<vector<ThreatsObject>> threats(9);
+vector<vector<ThreatsObject>> threats(15);
 
-vector<int> v = {2500, 5000, 7500, 9500, 12000, 16000, 21000, 25000, 30000};
+vector<int> v = {2500, 5000, 6500, 9000, 12000, 16000, 20000, 22000, 25000, 30000, 35000, 40000, 47000, 54000, 60000};
 
 //BGM of game
 Mix_Music *BGM = NULL;
-
-
 
 //Score of gaming process
 Score score;
@@ -95,7 +93,7 @@ bool loadMedia()
     }
     else
     {
-        for(int i = 0; i < 9; i++)
+        for(int i = 0; i < 15; i++)
         {
             for(int j = 0; j < int(threats[i].size()); j++)
             {
@@ -163,21 +161,28 @@ void close()
 void Resize_ThreatsList()
 {
     threats[0].resize(1);
-    threats[1].resize(5);
-    threats[2].resize(7);
+    threats[1].resize(3);
+    threats[2].resize(5);
     threats[3].resize(7);
-    threats[4].resize(7);
-    threats[5].resize(8);
-    threats[6].resize(9);
-    threats[7].resize(10);
-    threats[8].resize(12);
+    threats[4].resize(10);
+    threats[5].resize(5);
+    threats[6].resize(6);
+    threats[7].resize(7);
+    threats[8].resize(7);
+    threats[9].resize(9);
+    threats[10].resize(5);
+    threats[11].resize(5);
+    threats[12].resize(6);
+    threats[13].resize(6);
+    threats[14].resize(8);
+
 }
 
 void Initialize_Threats()
 {
-    for(int i = 0; i < 9; i++)
+    for(int i = 0; i < 15; i++)
     {
-        if (i == 0) threats[0][0].setPos(646, 276);
+        if (i == 0) threats[0][0].setPos(646, 276, 1);
 
         else
         {
@@ -185,7 +190,7 @@ void Initialize_Threats()
             {
                 pair<int, int> cur = RANDOM_POSITION[rand() % 28];
 
-                threats[i][j].setPos(cur.first, cur.second);
+                threats[i][j].setPos(cur.first, cur.second, i + 1);
             }
         }
     }
@@ -249,7 +254,7 @@ int main(int argc, char * args[])
 
             gBackground.render(0, 0, NULL);
 
-            if (batch <= 8 && SDL_GetTicks() - time_start_playing >= v[batch]) batch++;
+            if (batch <= 14 && SDL_GetTicks() - time_start_playing >= v[batch]) batch++;
 
             life_4th.check_Displaying(character.get_LifePoint());
             life_2th.check_Displaying(character.get_LifePoint());
@@ -312,7 +317,7 @@ int main(int argc, char * args[])
             { 
                 Mix_HaltMusic();
                 
-                for(int i = 0; i < 9; i++)
+                for(int i = 0; i < 15; i++)
                 {
                     for(int j = 0; j < int(threats[i].size()); j++)
                         threats[i][j].free();
@@ -334,7 +339,10 @@ int main(int argc, char * args[])
 
         int imp_time_real = timer.get_ticks();
 
+        // cerr << batch << "\n";
+
         if (imp_time_real < time_one_frame) SDL_Delay(time_one_frame - imp_time_real);
+    
     }
 
     close();

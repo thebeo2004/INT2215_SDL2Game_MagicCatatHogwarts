@@ -56,7 +56,7 @@ void Support::check_Displaying(int num)
 
 void Support::render()
 {
-    if (is_dead || frame > 50)
+    if (is_dead || frame > 80)
     {
         free();
 

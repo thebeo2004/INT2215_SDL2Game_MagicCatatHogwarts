@@ -18,7 +18,7 @@ const int FRAME_THREAT_WIDTH = 150;
 const int FRAME_THREAT_HEIGHT = 150;
 
 const int FRAME_PER_SECOND = 20;
-const int TOTAL_THREATS = 66;
+const int TOTAL_THREATS = 90;
 
 static int time_start_playing = 0;
 static int num_threats_disappear = 0;
