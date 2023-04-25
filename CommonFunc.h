@@ -18,10 +18,11 @@ const int FRAME_THREAT_WIDTH = 150;
 const int FRAME_THREAT_HEIGHT = 150;
 
 const int FRAME_PER_SECOND = 20;
-const int TOTAL_THREATS = 90;
+const int TOTAL_THREATS = 109;
 
 static int time_start_playing = 0;
 static int num_threats_disappear = 0;
+static int high_score = 0;
 
 //Dùng 1 biến duy nhất load hiệu ứng âm thanh cho Threats -> Tối ưu hóa bộ nhớ
 static Mix_Chunk* sound_threat_effect = NULL;

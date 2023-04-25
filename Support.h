@@ -36,4 +36,6 @@ class Support : public BaseObject
         bool isInside(int x, int y);
 
         void render();
+
+        void initialize(int x, int y, int num);
 };

@@ -1,0 +1,60 @@
+Xử lý Replay cho game.
+    +) Vị trí: Phần gameover -> Thêm phần hình tròn để có thể replay game.
+        -> Khi di chuột vào: Chuyển sang animation sáng, và nếu nhấn thì sẽ replay lại game.
+
+Class Replay chỉ có tác dụng hiển thị dấu quay lại, và nhận trả trạng thái xem replay chưa.
+
+    -> xử lý cái vấn đề Reset sẽ được thành lập riêng trong hàm main.
+        Cụ thể là sẽ Reset lại các trạng thái, biến lưu giữ, cần thiết.
+
+Các vấn đề liên quan khi xử lý Replay:
+
+    +) Các phần không ảnh hưởng:
+        Wingar_Displayed, Tittle, Skill, LoadFont, Lightning_Displayed, ImpTimer, Heart_Displayed, BaseObject
+
+    +) Sau khi nhấn Replay -> Quay trở lại màn hình chờ ban đầu.
+        -> Reset lại Menu
+
+    +) MainObject:
+        Việc hủy Sound Effect, giải phóng heart, wingar, expecto và các banner nằm trong hàm hủy    
+            -> Không ảnh hưởng.
+
+        => Sau khi Replay, không cần thao tác SetClip cho Main (Cụ thể là không cần load lại soundeffect)
+            Sau khi Victory: Không có thứ gì được giải phóng.
+            Sau khi Die, có giải phóng cho việc lưu giữ ảnh các Status của Main 
+                -> Không ảnh hưởng.
+
+=> Sau khi Replay: Cần reinitialize các vấn đề liên quan tọa độ, nhấn nút ấn, trạng thái ban đầu,....
+
+    x_pos_ = -75;
+    y_pos_ = 130;
+    frame = 0;
+    status_ = WAITING;
+    is_free = true;
+    is_dead = false;
+
+    life_point = 5;
+
+    threats_die = 0;
+    num = 1;
+
+    is_scared = true;
+
+    lightning_time = 0;
+    sunken_time = 0;
+
+    is_lightning = false;
+    is_sunken = false;
+
+    wingar_time = 0;
+    
+    is_wingartime = true;
+
+    game_over = false;
+
+    +) ThreatsObject:
+        Xử lý easy hơn so với Main, thì Reset bao gồm SetPos và initalize()
+
+    +) Đối tượng Support:
+    +) Xử lý Score Object
+

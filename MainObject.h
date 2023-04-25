@@ -111,4 +111,7 @@ class MainObject : public BaseObject
         bool is_gameover();
 
         void victory();
+
+        //Phục vụ cho việc reset lại sau mỗi lần replay
+        void initialize();
 };

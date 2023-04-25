@@ -4,6 +4,11 @@
 
 Support::Support(int x, int y, int num)
 {
+    initialize(x, y, num);
+}
+
+void Support::initialize(int x, int y, int num)
+{
     x_pos = x;
 
     y_pos = y;

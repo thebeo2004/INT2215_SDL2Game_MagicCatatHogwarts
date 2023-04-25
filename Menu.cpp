@@ -4,6 +4,11 @@
 
 Menu::Menu()
 {
+    initialize();
+}
+
+void Menu::initialize()
+{
     is_playing = false;
 
     is_updateSmoke = false;

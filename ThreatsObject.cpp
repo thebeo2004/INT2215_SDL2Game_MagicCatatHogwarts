@@ -5,6 +5,11 @@
 
 ThreatsObject::ThreatsObject()
 {
+    initialize();
+}
+
+void ThreatsObject::initialize()
+{
     frame = 0;
 
     is_free = true;
@@ -139,7 +144,6 @@ void ThreatsObject::attack()
 
 void ThreatsObject::set_clips()
 {
-
     if (mWidth > 0 && mHeight > 0)
     {
         for(int i = 0; i < 10; i++)

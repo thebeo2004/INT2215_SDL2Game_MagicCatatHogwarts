@@ -4,6 +4,11 @@
 
 Score::Score()
 {
+    initialize();
+}
+
+void Score::initialize()
+{
     score = 0;
 
     num_die = 0;

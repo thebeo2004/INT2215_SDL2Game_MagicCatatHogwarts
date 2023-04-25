@@ -81,6 +81,8 @@ class Menu: public BaseObject
 
         bool playing();
 
+        void initialize();
+
     private:
 
         Mix_Chunk* intro;
@@ -94,4 +96,5 @@ class Menu: public BaseObject
 
         Smoke smoke_left, smoke_right;
 };
+
 

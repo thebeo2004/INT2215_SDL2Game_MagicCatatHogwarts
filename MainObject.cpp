@@ -4,36 +4,13 @@
 
 MainObject::MainObject()
 {
-    x_pos_ = -75;
-    y_pos_ = 130;
-    frame = 0;
-    status_ = WAITING;
-    is_free = true;
-    is_dead = false;
-    
-    life_point = 5;
-
-    threats_die = 0;
-    num = 1;
-
-    is_scared = true;
-
-    lightning_time = 0;
-    sunken_time = 0;
-
-    is_lightning = false;
-    is_sunken = false;
+    initialize();
 
     heart_displayed.set_clip();
     lightning_displayed.set_clip();
     wingar_displayed.set_clip();
 
     set_font = false;
-
-    wingar_time = 0;
-    is_wingartime = true;
-
-    game_over = false;
 }
 
 MainObject::~MainObject()
@@ -69,6 +46,34 @@ MainObject::~MainObject()
     lightning_displayed.free();
 
     ultimate_skill.free();
+}
+
+void MainObject::initialize()
+{
+    x_pos_ = -75;
+    y_pos_ = 130;
+    frame = 0;
+    status_ = WAITING;
+    is_free = true;
+    is_dead = false;
+    
+    life_point = 5;
+
+    threats_die = 0;
+    num = 1;
+
+    is_scared = true;
+
+    lightning_time = 0;
+    sunken_time = 0;
+
+    is_lightning = false;
+    is_sunken = false;
+
+    wingar_time = 0;
+    is_wingartime = true;
+
+    game_over = false;
 }
 
 int MainObject::getPosX()

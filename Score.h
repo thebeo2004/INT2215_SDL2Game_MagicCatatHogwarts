@@ -37,4 +37,6 @@ class Score
         void render();
 
         int get_score();
+
+        void initialize();
 };

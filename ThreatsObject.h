@@ -86,4 +86,5 @@ class ThreatsObject: public BaseObject
 
         int GetScore(Entity main_character);
 
+        void initialize();
 };

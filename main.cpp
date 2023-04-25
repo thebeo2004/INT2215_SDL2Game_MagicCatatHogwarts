@@ -165,16 +165,16 @@ void Resize_ThreatsList()
     threats[2].resize(5);
     threats[3].resize(7);
     threats[4].resize(10);
-    threats[5].resize(5);
-    threats[6].resize(6);
-    threats[7].resize(7);
-    threats[8].resize(7);
-    threats[9].resize(9);
-    threats[10].resize(5);
-    threats[11].resize(5);
-    threats[12].resize(6);
-    threats[13].resize(6);
-    threats[14].resize(8);
+    threats[5].resize(7);
+    threats[6].resize(8);
+    threats[7].resize(9);
+    threats[8].resize(9);
+    threats[9].resize(10);
+    threats[10].resize(7);
+    threats[11].resize(7);
+    threats[12].resize(8);
+    threats[13].resize(8);
+    threats[14].resize(10);
 
 }
 
@@ -196,8 +196,61 @@ void Initialize_Threats()
     }
 }
 
+void Reset() //for new round
+{
+    //for menu:
+    menu.initialize();
+
+    //for mainobject
+    character.initialize();
+    character.loadFromFile("character/running.png");
+    num_threats_disappear = 0;
+
+    //for threats object
+    for(int i = 0; i < 15; i++)
+    {
+        if (i == 0) threats[0][0].setPos(646, 276, 1);
+
+        for(int j = 0; j < int(threats[i].size()); j++)
+        {
+            threats[i][j].initialize();
+            threats[i][j].loadFromFile("threats/normal_left.png");
+
+            if (i > 0)  
+            {   pair<int, int> cur = RANDOM_POSITION[rand() % 28];
+        
+                threats[i][j].setPos(cur.first, cur.second, i + 1);
+            }
+        }
+    }
+
+    //for Support objects
+    life_4th.initialize(SCREEN_WIDTH - 80, SCREEN_HEIGHT/2 - 20, 4);
+    life_2th.initialize(SCREEN_WIDTH - 80, 75, 2);
+
+   //for score
+    score.initialize();
+
+    //for end game
+    the_end.initialize();
+}
+
+void Get_HighScore()
+{
+    freopen("Score.txt", "r", stdin);
+    cin >> high_score;
+}
+
+void Save_HighScore()
+{
+    freopen("Score.txt", "w", stdout);
+    cout << high_score;
+}
+
 int main(int argc, char * args[])
 {
+    Get_HighScore();
+
     srand(time(0));
 
     Resize_ThreatsList();
@@ -326,14 +379,29 @@ int main(int argc, char * args[])
             }
 
             if (SDL_PollEvent(&e) != 0)
+            {
                 if (e.type == SDL_QUIT) break;
+                the_end.HandelInputAction(e);
+            }
 
             if (character.get_LifePoint() > 0)
                 the_end.victory(score.get_score());
             else the_end.lose();
 
             the_end.render();
+
+            if (the_end.Replay_Game())
+            {
+                Reset();
+
+                is_playingBGM = false;
+
+                batch = 0;
+
+                free_after_game = false;
+            }
         }
+
 
         SDL_RenderPresent(gRenderer);
 
@@ -342,8 +410,8 @@ int main(int argc, char * args[])
         // cerr << batch << "\n";
 
         if (imp_time_real < time_one_frame) SDL_Delay(time_one_frame - imp_time_real);
-    
     }
 
     close();
+    Save_HighScore();
 }
