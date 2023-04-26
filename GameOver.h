@@ -42,7 +42,7 @@ class Replay : public BaseObject
 
             loadFromFile("menu/return.png");
 
-            SDL_Rect renderquad = {SCREEN_WIDTH - 230, 325, 75, 73};
+            SDL_Rect renderquad = {SCREEN_WIDTH - 175, 325, 75, 73};
 
             if (!is_light) 
                 SDL_RenderCopy(gRenderer, mTexture, &frame_clip[0], &renderquad);
@@ -73,6 +73,76 @@ class Replay : public BaseObject
         bool is_loadSound_effect;
 };
 
+class Exit : public BaseObject
+{
+    public:
+        Exit()
+        {
+            frame = 0;
+            
+            for(int i = 0; i < 2; i++)
+            {
+                frame_clip[i].x = 75*i;
+                frame_clip[i].y = 0;
+                frame_clip[i].w = 75;
+                frame_clip[i].h = 73;
+            }
+
+            is_light = false;
+
+            is_loadSound_effect = false;
+        }
+
+        ~Exit()
+        {
+            BaseObject::free();
+
+            Mix_FreeChunk(sound_effect);
+
+            sound_effect = NULL;
+        }
+
+        void render()
+        {
+            if (!is_loadSound_effect)
+                sound_effect = Mix_LoadWAV("sound/mouse1.ogg"),
+                is_loadSound_effect = true;
+
+            loadFromFile("menu/exit.png");
+
+            SDL_Rect renderquad = {SCREEN_WIDTH - 275, 325, 75, 73};
+
+            if (!is_light) 
+                SDL_RenderCopy(gRenderer, mTexture, &frame_clip[0], &renderquad);
+            else
+                SDL_RenderCopy(gRenderer, mTexture, &frame_clip[1], &renderquad);
+        }
+
+        void Light()
+        {
+            if (!is_light)
+                Mix_PlayChannel(-1, sound_effect, 0);
+
+            is_light = true;
+        }
+
+        void Dark() {is_light = false;}
+
+    private:
+
+        int frame;
+
+        bool is_light;
+
+        SDL_Rect frame_clip[3];
+
+        Mix_Chunk* sound_effect;
+
+        bool is_loadSound_effect;
+};
+
+
+
 class Over : public BaseObject
 {
     public:
@@ -94,6 +164,8 @@ class Over : public BaseObject
 
         bool Replay_Game();
 
+        bool Exit_Game();
+
         void initialize();
     private:
 
@@ -104,9 +176,13 @@ class Over : public BaseObject
 
         Replay replay;
 
+        Exit exit;
+
         bool is_victory;
 
         bool is_replay;
+
+        bool is_exit;
 
         //Điểm hiện tại có phải là highscore
         bool is_highscore;

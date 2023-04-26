@@ -10,7 +10,10 @@ Over::Over()
 void Over::initialize()
 {
     is_replay = false;
+
     is_highscore = false;
+
+    // is_exit = false;
 }
 
 Over::~Over()
@@ -26,6 +29,8 @@ Over::~Over()
     txt.free();
 
     replay.free();
+
+    exit.free();
 }
 
 void Over::SetFont()
@@ -108,24 +113,39 @@ void Over::render()
     }
 
     replay.render();
+    exit.render();
 }
 
 void Over::HandelInputAction(SDL_Event e)
 {
-    if ((e.button.x > SCREEN_WIDTH - 230 && e.button.x < SCREEN_WIDTH - 230 + 75) && 
+    if ((e.button.x > SCREEN_WIDTH - 175 && e.button.x < SCREEN_WIDTH - 200 + 75) && 
         (e.button.y > 325 && e.button.y < 325 + 73))
             replay.Light();
     else replay.Dark();
 
+    if ((e.button.x > SCREEN_WIDTH - 275 && e.button.x < SCREEN_WIDTH - 300 + 75) && 
+        (e.button.y > 325 && e.button.y < 325 + 73))
+            exit.Light();
+    else exit.Dark();
+
     if (e.type == SDL_MOUSEBUTTONDOWN)
     {
-        if ((e.button.x > SCREEN_WIDTH - 230 && e.button.x < SCREEN_WIDTH - 230 + 75) && 
+        if ((e.button.x > SCREEN_WIDTH - 175 && e.button.x < SCREEN_WIDTH - 200 + 75) && 
         (e.button.y > 325 && e.button.y < 325 + 73))
             is_replay = true;
+
+        if ((e.button.x > SCREEN_WIDTH - 275 && e.button.x < SCREEN_WIDTH - 300 + 75) && 
+        (e.button.y > 325 && e.button.y < 325 + 73))
+            is_exit = true;
     }
 }
 
 bool Over::Replay_Game()
 {
     return is_replay;
+}
+
+bool Over::Exit_Game()
+{
+    return is_exit;
 }

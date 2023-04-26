@@ -74,4 +74,21 @@ bool isCollision(Entity a, Entity b)
 //Dùng cho việc random vị trí ban đầu của Threats.
 vector<pair<int, int>> RANDOM_POSITION = {{-119, 164}, {-117, 240}, {-105, 118}, {-122, 31}, {-134, 4}, {-115, -81}, {-27, -94}, {76, -90}, {153, -90}, {240, -86}, {33, 457}, {140, 464}, {240, 457}, {381, 459}, {460, 430}, {559, 416}, {639, 408}, {659, 315}, {646, 276},  {646, 200}, {640, 95}, {637, 44}, {649, -16}, {630, -84}, {571, -84}, {505, -75}, {444, -82}, {383, -69}};
 
-
+struct ImpTimer
+{
+    private:
+        int start_tick;
+    public:
+        ImpTimer()
+        {
+            start_tick = 0;
+        }
+        void start()
+        {
+            start_tick = SDL_GetTicks();
+        }
+        int get_ticks()
+        {
+            return SDL_GetTicks() - start_tick;
+        }
+};

@@ -4,8 +4,6 @@
 #include "BaseObject.cpp"
 #include "MainObject.h"
 #include "MainObject.cpp"
-#include "ImpTimer.h"
-#include "ImpTimer.cpp"
 #include "ThreatsObject.h"
 #include "ThreatsObject.cpp"
 #include "LoadFont.h"
@@ -18,6 +16,7 @@
 #include "Menu.cpp"
 #include "GameOver.h"
 #include "GameOver.cpp"
+
 
 bool init();
 bool loadMedia();
@@ -270,6 +269,7 @@ int main(int argc, char * args[])
     int batch = 0;
 
     ImpTimer timer;
+
     int time_one_frame = 1000/FRAME_PER_SECOND;
 
     life_4th.set_clips();
@@ -400,8 +400,10 @@ int main(int argc, char * args[])
 
                 free_after_game = false;
             }
-        }
 
+            if (the_end.Exit_Game())
+                break;
+        }
 
         SDL_RenderPresent(gRenderer);
 
