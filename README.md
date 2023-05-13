@@ -6,7 +6,7 @@
 - Slide Powerpoint về game: https://54q13n-my.sharepoint.com/:p:/g/personal/thebeo2004_54q13n_onmicrosoft_com/EezwG1EZivhAscrlTUYjtzcBPCky4jdsBwPl-pDQMQCr-w?e=1zx1AE
 - Các class và mối liên hệ: https://drive.google.com/file/d/1JKO8PQJSLlER42UcoKAoouGws_fcP4P-/view?usp=sharing
 - Video demo game: https://www.youtube.com/watch?v=Sfx08pLlPts
-- Game resources: https://www.spriters-resource.com/browser_games/googledoodles/sheet/108799/
+- Game resources: https://www.spriters-resource.com/browser_games/googledoodles/sheet/108799/, https://www.youtube.com/watch?v=j_Ys8IWzyH0 (Sound of Top 10 Spells at Harry Potter)
 - Tài liệu học tập: phattrienphanmemaz123, lazyfoo.
 
 ## Chi tiết chơi game
